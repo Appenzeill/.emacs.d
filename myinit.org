@@ -1,0 +1,72 @@
+#+STARTUP: overview 
+* Interface Tweaks
+** Startup, general settings
+#+BEGIN_SRC emacs-lisp
+;; Remove initial buffer, set index file
+;; (setq inhibit-startup-message t)
+;; (setq initial-buffer-choice "index.org")
+
+;; Hide Scroll bar,menu bar, tool bar
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; Page numbering
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+
+;; Display battery for when in full screen mode
+(display-battery-mode t)
+
+;; Helm
+ (use-package helm 
+   :ensure t
+   :config (helm-mode 1))
+(require 'helm-config)
+
+(setq helm-split-window-in-side-p t
+helm-move-to-line-cycle-in-source t)
+
+
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** Theming & Aesthethic
+#+BEGIN_SRC emacs-lisp
+(use-package gruvbox-theme 
+   :config
+   (load-theme 'gruvbox-dark-hard t)
+   :ensure t)
+#+END_SRC
+
+** Programming, Scripting & Markup Lanugages
+*** Rust
+#+BEGIN_SRC emacs-lisp
+;; Rust major mode
+(use-package rust-mode 
+   :ensure t)
+ 
+;; Racer 
+(use-package racer 
+   :ensure t)
+
+;; Cargo minor mode
+(use-package cargo 
+   :ensure t)
+#+END_SRC
+
+** News & Reddit
+#+BEGIN_SRC emacs-lisp
+(use-package gnus 
+   :ensure t)
+
+(custom-set-variables '(gnus-select-method (quote (nnreddit ""))))
+
+;; Reddit
+(use-package nnreddit
+   :ensure t)
+#+END_SRC
+#+RESULTS:
+: t
