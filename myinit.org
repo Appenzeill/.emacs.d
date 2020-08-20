@@ -1,6 +1,6 @@
 #+STARTUP: overview 
 * Interface Tweaks
-** Startup, general settings
+** Startup, general settings & packages
 #+BEGIN_SRC emacs-lisp
 ;; Remove initial buffer, set index file
 ;; (setq inhibit-startup-message t)
@@ -27,21 +27,38 @@
 (setq helm-split-window-in-side-p t
 helm-move-to-line-cycle-in-source t)
 
+;; Company mode
+ (use-package company 
+   :ensure t)
 
+;; Which key
+(use-package which-key 
+   :ensure t)
+(require 'helm-config)
+(which-key-mode)
+
+;; Flycheck
+(use-package magit
+   :ensure t)
 #+END_SRC
 
 #+RESULTS:
 : t
 
+** Keybindings
+test
 ** Theming & Aesthethic
 #+BEGIN_SRC emacs-lisp
-(use-package gruvbox-theme 
+(use-package sublime-themes
    :config
-   (load-theme 'gruvbox-dark-hard t)
+   (load-theme 'spolsky t)
    :ensure t)
 #+END_SRC
 
-** Programming, Scripting & Markup Lanugages
+#+RESULTS:
+: t
+
+** Programming, Scripting & Markup Langugages
 *** Rust
 #+BEGIN_SRC emacs-lisp
 ;; Rust major mode
@@ -52,21 +69,36 @@ helm-move-to-line-cycle-in-source t)
 (use-package racer 
    :ensure t)
 
+(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+(setq racer-rust-src-path "/home/daan/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src") ;; Rust source code PATH
+
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
 ;; Cargo minor mode
 (use-package cargo 
    :ensure t)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+
 #+END_SRC
 
-** News & Reddit
+#+RESULTS:
+| cargo-minor-mode | racer-mode |
+*** Org
 #+BEGIN_SRC emacs-lisp
-(use-package gnus 
-   :ensure t)
-
-(custom-set-variables '(gnus-select-method (quote (nnreddit ""))))
-
-;; Reddit
-(use-package nnreddit
-   :ensure t)
+(use-package org-superstar  ;; Improved version of org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  
+(setq org-startup-indented t)           ;; Indent according to section
+(setq org-startup-with-inline-images t) ;; Display images in-buffer by default
 #+END_SRC
+
 #+RESULTS:
 : t
