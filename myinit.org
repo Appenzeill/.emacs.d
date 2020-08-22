@@ -1,23 +1,36 @@
 #+STARTUP: overview 
 * Interface Tweaks
 ** Startup, general settings & packages
+*** Scrollbar, Menubar & Toolbar
 #+BEGIN_SRC emacs-lisp
-;; Remove initial buffer, set index file
-;; (setq inhibit-startup-message t)
-;; (setq initial-buffer-choice "index.org")
-
 ;; Hide Scroll bar,menu bar, tool bar
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
+#+END_SRC
+*** Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile 
+   :ensure t)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+END_SRC
+
+#+RESULTS:
+: projectile-command-map
+
+*** Page numbering
+#+BEGIN_SRC emacs-lisp
 ;; Page numbering
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
 
-;; Display battery for when in full screen mode
-(display-battery-mode t)
+#+END_SRC
 
+*** Helm
+#+BEGIN_SRC emacs-lisp
 ;; Helm
  (use-package helm 
    :ensure t
@@ -27,36 +40,81 @@
 (setq helm-split-window-in-side-p t
 helm-move-to-line-cycle-in-source t)
 
+#+END_SRC
+
+*** Company mode
+#+BEGIN_SRC emacs-lisp
 ;; Company mode
  (use-package company 
    :ensure t)
 
+#+END_SRC
+
+*** Which key
+#+BEGIN_SRC emacs-lisp
 ;; Which key
 (use-package which-key 
    :ensure t)
 (require 'helm-config)
 (which-key-mode)
 
+#+END_SRC
+
+*** Spelling & Grammar
+#+BEGIN_SRC emacs-lisp
 ;; Flycheck
-(use-package magit
+(use-package flycheck 
    :ensure t)
+   
+;; Langtool (LibreGrammar based on LanguageTool)
+;;(setq langtool-language-tool-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-commandline.jar")
+;;(setq langtool-mother-tongue "nl")
+;;(use-package 'langtool)
 #+END_SRC
 
 #+RESULTS:
-: t
 
 ** Keybindings
 test
-** Theming & Aesthethic
+** Theming, Ricing & Aesthethics
+*** Theme & Font sizes
 #+BEGIN_SRC emacs-lisp
-(use-package sublime-themes
-   :config
-   (load-theme 'spolsky t)
+(use-package poet-theme 
+   :config 
+  (load-theme 'poet-dark t)
    :ensure t)
+   
+(defun toggle-dark ()
+  (interactive)
+  (if (eq (car custom-enabled-themes) 'leuven)
+      (disable-theme 'poet-dark)
+    (enable-theme 'poet)))
+(global-set-key [f5] 'toggle-dark)
+
+(defun toggle-light ()
+  (interactive)
+  (if (eq (car custom-enabled-themes) 'leuven)
+      (disable-theme 'poet)
+    (enable-theme 'poet-dark)))
+(global-set-key [(shift f5)] 'toggle-light)
+
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
+(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono")
+(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif")
 #+END_SRC
 
 #+RESULTS:
-: t
+*** Dashboard
+#+BEGIN_SRC emacs-lisp
+;; Fancy Dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+  
+#+END_SRC
+#+RESULTS:
+: 0
 
 ** Programming, Scripting & Markup Langugages
 *** Rust
@@ -89,6 +147,7 @@ test
 
 #+RESULTS:
 | cargo-minor-mode | racer-mode |
+|                  |            |
 *** Org
 #+BEGIN_SRC emacs-lisp
 (use-package org-superstar  ;; Improved version of org-bullets
@@ -98,7 +157,17 @@ test
   
 (setq org-startup-indented t)           ;; Indent according to section
 (setq org-startup-with-inline-images t) ;; Display images in-buffer by default
+
+(setq org-indent-indentation-per-level 1)
+
+;; Org Bullet title sizes
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
+)
 #+END_SRC
 
 #+RESULTS:
-: t
