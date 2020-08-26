@@ -9,17 +9,25 @@
 (menu-bar-mode -1)
 
 #+END_SRC
+
+#+RESULTS:
+
 *** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile 
-   :ensure t)
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+   :ensure t
+   :config
+   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+   (projectile-mode +1))
+
+(use-package helm-projectile 
+   :ensure t
+   :config (helm-projectile-on))
+
 #+END_SRC
 
 #+RESULTS:
-: projectile-command-map
+: t
 
 *** Page numbering
 #+BEGIN_SRC emacs-lisp
@@ -29,10 +37,13 @@
 
 #+END_SRC
 
+#+RESULTS:
+: relative
+
 *** Helm
 #+BEGIN_SRC emacs-lisp
 ;; Helm
- (use-package helm 
+(use-package helm 
    :ensure t
    :config (helm-mode 1))
 (require 'helm-config)
@@ -42,13 +53,35 @@ helm-move-to-line-cycle-in-source t)
 
 #+END_SRC
 
+#+RESULTS:
+: t
+
+*** Eshell
+#+BEGIN_SRC emacs-lisp
+(defun eshell-here ()
+  (interactive)
+  (let* ((height (/ (window-total-height) 3)))
+    (split-window-vertically (- height))
+    (other-window 1)
+    (eshell "new")
+    (insert (concat "ls"))
+    (eshell-send-input)))
+
+(bind-key "C-`" 'eshell-here)
+#+END_SRC
+
+#+RESULTS:
+: eshell-here
+
 *** Company mode
 #+BEGIN_SRC emacs-lisp
 ;; Company mode
- (use-package company 
+(use-package company 
    :ensure t)
 
 #+END_SRC
+
+#+RESULTS:
 
 *** Which key
 #+BEGIN_SRC emacs-lisp
@@ -60,6 +93,9 @@ helm-move-to-line-cycle-in-source t)
 
 #+END_SRC
 
+#+RESULTS:
+: t
+
 *** Spelling & Grammar
 #+BEGIN_SRC emacs-lisp
 ;; Flycheck
@@ -69,13 +105,28 @@ helm-move-to-line-cycle-in-source t)
 ;; Langtool (LibreGrammar based on LanguageTool)
 ;;(setq langtool-language-tool-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-commandline.jar")
 ;;(setq langtool-mother-tongue "nl")
-;;(use-package 'langtool)
+;;(use-package langtool
+;;  :ensure t
+;;  :custom
+;;  (langtool-language-tool-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-commandline.jar")
+;;  (langtool-language-tool-server-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-server.jar")
+;;  (langtool-server-user-arguments '("-p" "8082"))
+;;  (langtool-default-language "nl"))
 #+END_SRC
 
 #+RESULTS:
 
-** Keybindings
-test
+*** Buffers
+#+BEGIN_SRC emacs-lisp
+(defun close-buffer-and-window ()
+    (kill-buffer-and-window))
+
+(bind-key "C-c r" 'kill-buffer-and-window)
+#+END_SRC
+
+#+RESULTS:
+: kill-buffer-and-window
+
 ** Theming, Ricing & Aesthethics
 *** Theme & Font sizes
 #+BEGIN_SRC emacs-lisp
@@ -93,7 +144,7 @@ test
 
 (defun toggle-light ()
   (interactive)
-  (if (eq (car custom-enabled-themes) 'leuven)
+  (If (eq (car custom-enabled-themes) 'leuven)
       (disable-theme 'poet)
     (enable-theme 'poet-dark)))
 (global-set-key [(shift f5)] 'toggle-light)
@@ -106,17 +157,50 @@ test
 #+RESULTS:
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
-;; Fancy Dashboard
+  ;; Fancy Dashboard
 (use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
-  
+:ensure t
+:config
+(dashboard-setup-startup-hook))
+
+(setq dashboard-items '((recents  . 5)
+                        (projects . 5)
+                        (bookmarks . 5)
+                        (agenda . 5)
+                        (registers . 5)))
+                        
+
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+
 #+END_SRC
 #+RESULTS:
-: 0
+: t
+
+*** Icons
+M-x all-the-icons-install-fonts for all icons
+#+BEGIN_SRC emacs-lisp
+;; Icons 
+(use-package all-the-icons 
+   :ensure t)
+
+#+END_SRC
+
+#+RESULTS:
 
 ** Programming, Scripting & Markup Langugages
+*** Common Tools
+**** Yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+   :ensure t)
+   
+(yas-global-mode 1)
+#+END_SRC
+
+#+RESULTS:
+: t
+
 *** Rust
 #+BEGIN_SRC emacs-lisp
 ;; Rust major mode
@@ -143,11 +227,21 @@ test
    :ensure t)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 
+;; Eshell automaticly compiles project
+(defun cargo-run ()
+  (interactive)
+  (let* ((height (/ (window-total-height) 3)))
+    (split-window-vertically (- height))
+    (other-window 1)
+    (eshell "new")
+    (insert (concat "cargo run"))
+    (eshell-send-input)))
+
+(bind-key "C-1" 'cargo-run)
 #+END_SRC
 
 #+RESULTS:
-| cargo-minor-mode | racer-mode |
-|                  |            |
+: cargo-run
 *** Org
 #+BEGIN_SRC emacs-lisp
 (use-package org-superstar  ;; Improved version of org-bullets
@@ -171,3 +265,13 @@ test
 #+END_SRC
 
 #+RESULTS:
+*** Web
+#+BEGIN_SRC emacs-lisp
+(use-package web 
+   :ensure t)
+#+END_SRC
+
+#+RESULTS:
+
+*** Python
+*** WordPress (?)
