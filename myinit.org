@@ -12,23 +12,6 @@
 
 #+RESULTS:
 
-*** Projectile
-#+BEGIN_SRC emacs-lisp
-(use-package projectile 
-   :ensure t
-   :config
-   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-   (projectile-mode +1))
-
-(use-package helm-projectile 
-   :ensure t
-   :config (helm-projectile-on))
-
-#+END_SRC
-
-#+RESULTS:
-: t
-
 *** Page numbering
 #+BEGIN_SRC emacs-lisp
 ;; Page numbering
@@ -43,14 +26,25 @@
 *** Helm
 #+BEGIN_SRC emacs-lisp
 ;; Helm
-(use-package helm 
-   :ensure t
-   :config (helm-mode 1))
-(require 'helm-config)
-
-(setq helm-split-window-in-side-p t
-helm-move-to-line-cycle-in-source t)
-
+;; Copied from matman26
+(use-package helm
+  :init
+    (require 'helm-config)
+    (setq helm-split-window-in-side-p t
+          helm-move-to-line-cycle-in-source t)
+  :config 
+    (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
+    (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
+    (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
+    (define-key evil-ex-map "b" 'helm-buffers-list) ;; List buffers ( Vim way )
+    (global-set-key (kbd "C-x r b") 'helm-bookmarks) ;; Bookmarks menu
+    (global-set-key (kbd "C-x C-f") 'helm-find-files) ;; Finding files with Helm
+    (global-set-key (kbd "M-c") 'helm-calcul-expression) ;; Use Helm for calculations
+    (global-set-key (kbd "C-s") 'helm-occur)  ;; Replaces the default isearch keybinding
+    (global-set-key (kbd "C-h a") 'helm-apropos)  ;; Helmized apropos interface
+    (global-set-key (kbd "M-x") 'helm-M-x)  ;; Improved M-x menu
+    (global-set-key (kbd "M-y") 'helm-show-kill-ring)  ;; Show kill ring, pick something to paste
+  :ensure t)
 #+END_SRC
 
 #+RESULTS:
@@ -60,14 +54,15 @@ helm-move-to-line-cycle-in-source t)
 #+BEGIN_SRC emacs-lisp
 (defun eshell-here ()
   (interactive)
-  (let* ((height (/ (window-total-height) 3)))
+  (if (get-buffer "*eshell*")
+  (kill-buffer-and-window)
+   (let* ((height (/ (window-total-height) 3)))
     (split-window-vertically (- height))
     (other-window 1)
     (eshell "new")
     (insert (concat "ls"))
-    (eshell-send-input)))
-
-(bind-key "C-`" 'eshell-here)
+    (eshell-send-input))))
+  (bind-key "C-`" 'eshell-here)
 #+END_SRC
 
 #+RESULTS:
@@ -83,49 +78,54 @@ helm-move-to-line-cycle-in-source t)
 
 #+RESULTS:
 
+*** Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile 
+   :ensure t
+   :config
+   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+   (projectile-mode +1))
+
+(use-package helm-projectile 
+   :ensure t
+   :config (helm-projectile-on))
+
+   
+   (bind-key "C-1" 'projectile-find-file)
+
+#+END_SRC
+
+#+RESULTS:
+: projectile-find-file
 *** Which key
 #+BEGIN_SRC emacs-lisp
 ;; Which key
 (use-package which-key 
    :ensure t)
-(require 'helm-config)
 (which-key-mode)
-
 #+END_SRC
 
 #+RESULTS:
 : t
-
-*** Spelling & Grammar
+*** Evil Tutor
 #+BEGIN_SRC emacs-lisp
-;; Flycheck
-(use-package flycheck 
+;; evil tutor 
+(use-package evil-tutor 
    :ensure t)
-   
-;; Langtool (LibreGrammar based on LanguageTool)
-;;(setq langtool-language-tool-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-commandline.jar")
-;;(setq langtool-mother-tongue "nl")
-;;(use-package langtool
-;;  :ensure t
-;;  :custom
-;;  (langtool-language-tool-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-commandline.jar")
-;;  (langtool-language-tool-server-jar "/home/daan/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-server.jar")
-;;  (langtool-server-user-arguments '("-p" "8082"))
-;;  (langtool-default-language "nl"))
+(which-key-mode)
 #+END_SRC
 
-#+RESULTS:
-
-*** Buffers
+*** Autopair
 #+BEGIN_SRC emacs-lisp
-(defun close-buffer-and-window ()
-    (kill-buffer-and-window))
-
-(bind-key "C-c r" 'kill-buffer-and-window)
+;; autopair 
+(use-package autopair 
+   :ensure t)
+(autopair-global-mode 1)
+(which-key-mode)
 #+END_SRC
 
 #+RESULTS:
-: kill-buffer-and-window
+: t
 
 ** Theming, Ricing & Aesthethics
 *** Theme & Font sizes
@@ -135,23 +135,13 @@ helm-move-to-line-cycle-in-source t)
   (load-theme 'poet-dark t)
    :ensure t)
    
-(defun toggle-dark ()
-  (interactive)
-  (if (eq (car custom-enabled-themes) 'leuven)
-      (disable-theme 'poet-dark)
-    (enable-theme 'poet)))
-(global-set-key [f5] 'toggle-dark)
+;; Set default font
+(set-face-attribute 'default nil
+                    :family "Iosevka"
+                    :height 100
+                    :weight 'normal
+                    :width 'normal)
 
-(defun toggle-light ()
-  (interactive)
-  (If (eq (car custom-enabled-themes) 'leuven)
-      (disable-theme 'poet)
-    (enable-theme 'poet-dark)))
-(global-set-key [(shift f5)] 'toggle-light)
-
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
-(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono")
-(set-face-attribute 'variable-pitch nil :family "IBM Plex Serif")
 #+END_SRC
 
 #+RESULTS:
@@ -166,41 +156,13 @@ helm-move-to-line-cycle-in-source t)
 (setq dashboard-items '((recents  . 5)
                         (projects . 5)
                         (bookmarks . 5)
-                        (agenda . 5)
-                        (registers . 5)))
-                        
-
-(setq dashboard-set-heading-icons t)
-(setq dashboard-set-file-icons t)
-
+                        (agenda . 5)))
 #+END_SRC
 #+RESULTS:
 : t
-
-*** Icons
-M-x all-the-icons-install-fonts for all icons
-#+BEGIN_SRC emacs-lisp
-;; Icons 
-(use-package all-the-icons 
-   :ensure t)
-
-#+END_SRC
-
-#+RESULTS:
 
 ** Programming, Scripting & Markup Langugages
 *** Common Tools
-**** Yasnippet
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-   :ensure t)
-   
-(yas-global-mode 1)
-#+END_SRC
-
-#+RESULTS:
-: t
-
 *** Rust
 #+BEGIN_SRC emacs-lisp
 ;; Rust major mode
@@ -228,20 +190,12 @@ M-x all-the-icons-install-fonts for all icons
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 
 ;; Eshell automaticly compiles project
-(defun cargo-run ()
-  (interactive)
-  (let* ((height (/ (window-total-height) 3)))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (insert (concat "cargo run"))
-    (eshell-send-input)))
 
-(bind-key "C-1" 'cargo-run)
 #+END_SRC
 
 #+RESULTS:
-: cargo-run
+| cargo-minor-mode | racer-mode |
+** Literate
 *** Org
 #+BEGIN_SRC emacs-lisp
 (use-package org-superstar  ;; Improved version of org-bullets
@@ -265,13 +219,4 @@ M-x all-the-icons-install-fonts for all icons
 #+END_SRC
 
 #+RESULTS:
-*** Web
-#+BEGIN_SRC emacs-lisp
-(use-package web 
-   :ensure t)
-#+END_SRC
 
-#+RESULTS:
-
-*** Python
-*** WordPress (?)
