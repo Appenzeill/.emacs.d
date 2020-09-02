@@ -147,7 +147,7 @@
 #+RESULTS:
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
-  ;; Fancy Dashboard
+;; Fancy Dashboard
 (use-package dashboard
 :ensure t
 :config
@@ -163,6 +163,25 @@
 
 ** Programming, Scripting & Markup Langugages
 *** Common Tools
+#+BEGIN_SRC emacs-lisp
+;; Rust major mode
+(use-package yasnippet
+   :ensure t)
+   
+(setq yas-snippet-dirs
+      '("~/Snippets/Org" ;; Personal Org snippets
+        "/Snippets/Rust" ;; the yasmate collection
+        ))
+
+(yas-global-mode 1)
+(yas-reload-all)
+(add-hook 'yas-minor-mode-hook (lambda ()
+(yas-activate-extra-mode 'fundamental-mode)))
+#+END_SRC
+
+#+RESULTS:
+| (lambda nil (yas-activate-extra-mode 'fundamental-mode)) | yas-minor-mode-set-explicitly |
+
 *** Rust
 #+BEGIN_SRC emacs-lisp
 ;; Rust major mode
@@ -195,6 +214,14 @@
 
 #+RESULTS:
 | cargo-minor-mode | racer-mode |
+*** Python
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+#+END_SRC
+
 ** Literate
 *** Org
 #+BEGIN_SRC emacs-lisp
@@ -216,7 +243,12 @@
   '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
   '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
 )
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
 #+END_SRC
 
 #+RESULTS:
+
 
