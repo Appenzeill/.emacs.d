@@ -244,9 +244,20 @@
   '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
 )
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)))
+(org-babel-do-load-languages 'org-babel-load-languages
+                             (append org-babel-load-languages
+                              '((python     . t)
+                                (plantuml       . t)))
+#+END_SRC
+
+#+RESULTS:
+: ((plantuml . plantuml) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+
+*** PlantUML
+#+BEGIN_SRC emacs-lisp
+(use-package plantuml-mode
+   :ensure t)
+
 #+END_SRC
 
 #+RESULTS:
