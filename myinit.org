@@ -1,5 +1,5 @@
 #+STARTUP: overview 
-* Interface Tweaks
+* Personal Config File
 ** Startup, general settings & packages
 *** Scrollbar, Menubar & Toolbar
 #+BEGIN_SRC emacs-lisp
@@ -249,20 +249,6 @@
   (elpy-enable))
 #+END_SRC
 
-*** Dart & Flutter
-#+BEGIN_SRC emacs-lisp
-(use-package dart-mode
-  :ensure t)
-
-(use-package lsp-dart
-  :ensure t
-  :hook (dart-mode . lsp))
-  
-#+END_SRC
-
-#+RESULTS:
-| lsp |
-
 *** Navigation
 #+BEGIN_SRC emacs-lisp
 ;; dumb-jump
@@ -385,27 +371,15 @@
 
 #+RESULTS:
 
-*** Flyspell
+** Grammar & Spelling
 #+BEGIN_SRC emacs-lisp
-      (defun fd-switch-dictionary()
-      (interactive)
-      (let* ((dic ispell-current-dictionary)
-    	 (change (if (string= dic "nederlands") "english" "nederlands")))
-        (ispell-change-dictionary change)
-        (message "Dictionary switched from %s to %s" dic change)
-        ))
-    
-      (global-set-key (kbd "<f8>")   'fd-switch-dictionary)
+(setq langtool-language-tool-jar "/home/appenzeill/Emacs External Files/LibreGrammar/LanguageTool-5.1-stable/languagetool-commandline.jar")
+(setq langtool-default-language "nl")
+(use-package langtool 
+   :ensure t)
 #+END_SRC
 
 #+RESULTS:
-: fd-switch-dictionary
 
-*** PDF Tools
-#+begin_src emacs-lisp :results output
-(use-package pdf-tools
-   :ensure t)
-#+end_src
-
-
-
+hallo, dit is een test. ik vraag me af of het goed gaat.
+en dit as. oke dit gaat niet goed.  
