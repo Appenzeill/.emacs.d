@@ -1,16 +1,18 @@
 #+STARTUP: overview 
 * Personal Config File
 ** Startup, general settings & packages
-*** Scrollbar, Menubar & Toolbar
+*** Scrollbar, Menubar, Titlebar & Toolbar
 #+BEGIN_SRC emacs-lisp
-;; Hide Scroll bar,menu bar, tool bar
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+  ;; Hide Scroll bar,menu bar, tool bar
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (setq default-frame-alist '((undecorated . t)))
 
 #+END_SRC
 
 #+RESULTS:
+: ((undecorated . t))
 
 *** Page numbering
 #+BEGIN_SRC emacs-lisp
@@ -73,7 +75,6 @@
 ;; Company mode
 (use-package company 
    :ensure t)
-
 #+END_SRC
 
 #+RESULTS:
@@ -373,13 +374,10 @@
 
 ** Grammar & Spelling
 #+BEGIN_SRC emacs-lisp
-(setq langtool-language-tool-jar "/home/appenzeill/Emacs External Files/LibreGrammar/LanguageTool-5.1-stable/languagetool-commandline.jar")
+(setq langtool-language-tool-server-jar "~/Emacs External Files/Grammatica & Spelling/LanguageTool-5.1-stable/languagetool-server.jar")
 (setq langtool-default-language "nl")
 (use-package langtool 
    :ensure t)
 #+END_SRC
 
 #+RESULTS:
-
-hallo, dit is een test. ik vraag me af of het goed gaat.
-en dit as. oke dit gaat niet goed.  
