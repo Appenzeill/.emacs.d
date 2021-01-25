@@ -7,12 +7,11 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
-  (setq default-frame-alist '((undecorated . t)))
+  ;;(setq default-frame-alist '((undecorated . t)))
 
 #+END_SRC
 
 #+RESULTS:
-: ((undecorated . t))
 
 *** Page numbering
 #+BEGIN_SRC emacs-lisp
@@ -51,6 +50,21 @@
 
 #+RESULTS:
 : t
+
+*** Navigation
+#+BEGIN_SRC emacs-lisp
+;; dumb-jump
+(use-package dumb-jump
+   :ensure t)
+
+(setq xref-backend-functions (remq 'etags--xref-backend xref-backend-functions))
+(add-to-list 'xref-backend-functions #'dumb-jump-xref-activate t)
+
+
+#+END_SRC
+
+#+RESULTS:
+| dumb-jump-xref-activate |
 
 *** Eshell
 #+BEGIN_SRC emacs-lisp
@@ -137,18 +151,12 @@
 (use-package poet-theme 
    :config 
   (load-theme 'poet-dark t)
+;;  (load-theme 'poet t)
    :ensure t)
-   
-;; Set default font
-(set-face-attribute 'default nil
-                    :family "Iosevka"
-                    :height 100
-                    :weight 'normal
-                    :width 'normal)
-
 #+END_SRC
 
 #+RESULTS:
+: t
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
 ;; Fancy Dashboard
@@ -196,11 +204,6 @@
 (use-package yasnippet
    :ensure t)
    
-(setq yas-snippet-dirs
-      '("~/Snippets/Org" ;; Personal Org snippets
-        "/Snippets/Rust" ;; the yasmate collection
-        ))
-
 (yas-global-mode 1)
 (yas-reload-all)
 (add-hook 'yas-minor-mode-hook (lambda ()
@@ -241,7 +244,12 @@
 #+END_SRC
 
 #+RESULTS:
-| cargo-minor-mode | racer-mode |
+| cargo-minor-mode | racer-mode |#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+#+END_SRC
 *** Python
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
@@ -250,55 +258,33 @@
   (elpy-enable))
 #+END_SRC
 
-*** Navigation
+#+RESULTS:
+
+*** C/C++
 #+BEGIN_SRC emacs-lisp
-;; dumb-jump
-(use-package dumb-jump
-   :ensure t)
-
-(setq xref-backend-functions (remq 'etags--xref-backend xref-backend-functions))
-(add-to-list 'xref-backend-functions #'dumb-jump-xref-activate t)
-
-
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
 #+END_SRC
 
 #+RESULTS:
-| dumb-jump-xref-activate |
+
+**** Eglot
+#+BEGIN_SRC emacs-lisp
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+#+END_SRC
+
+#+RESULTS:
+| eglot-ensure |
 
 ** Literate
 *** Org
+**** Org LaTeX
 #+BEGIN_SRC emacs-lisp
-;; org-superstar
-(use-package org-superstar  ;; Improved version of org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-  
-;; Org Bullet title sizes
-(custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
-)
-(setq org-plantuml-jar-path (expand-file-name "/home/daan/Emacs External Files/plantuml.jar"))
-
-;; personal tweaks
-(setq org-startup-indented t)             ;; Indent according to section
-(setq org-startup-with-inline-images t)   ;; Display images in-buffer by default
-(setq org-indent-indentation-per-level 1)
-
-
-
-(org-babel-do-load-languages 'org-babel-load-languages
-                              '(
-                              (python . t)
-                              (plantuml . t)
-                              (latex . t)
-))
-
-
 ;; inside .emacs file
 (setq org-latex-listings 'minted
       org-latex-packages-alist '(("" "minted"))
@@ -306,26 +292,12 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-        
-
-;; Evil-org
-(use-package evil-org
-  :ensure t
-  :after (evil org)
-  :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook
-            (lambda ()
-              (evil-org-set-key-theme '(navigation insert textobjects additional calendar))))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
 #+END_SRC
 
 #+RESULTS:
-: t
-
-*** Org + LaTeX skeletons
-**** LaTeX skeleton
+| pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f | pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f | pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f |
+**** Skeletons
+****** LaTeX skeleton
 #+BEGIN_SRC emacs-lisp
 (define-skeleton latex-skeleton
 "Skeleton for article type latex documents"
@@ -344,7 +316,11 @@
 "\\maketitle\n\n"
 "\\end{document}\n")
 #+END_SRC
-**** LaTeX article skeleton
+
+#+RESULTS:
+: latex-skeleton
+
+****** LaTeX article skeleton
 #+BEGIN_SRC emacs-lisp
 (define-skeleton org-latex-article
 "Skeleton for articles "
@@ -363,16 +339,70 @@
 #+RESULTS:
 : org-latex-article
 
-*** PlantUML
+**** Org Evil-Mode
 #+BEGIN_SRC emacs-lisp
-(use-package plantuml-mode
-   :ensure t)
+;; Evil-org
+(use-package evil-org
+  :ensure t
+  :after (evil org)
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme '(navigation insert textobjects additional calendar))))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+#+END_SRC
+
+#+RESULTS:
+: t
+
+**** Personal Tweaks
+#+BEGIN_SRC emacs-lisp
+;; personal tweaks
+(setq org-startup-indented t)             ;; Indent according to section
+(setq org-startup-with-inline-images t)   ;; Display images in-buffer by default
+(setq org-indent-indentation-per-level 1)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+**** Org Babel
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages 'org-babel-load-languages
+                              '(
+                              (C . t)
+                              (python . t)
+                              (plantuml . t)
+                              (latex . t)
+))
+#+END_SRC
+
+#+RESULTS:
+
+**** General styling
+#+BEGIN_SRC emacs-lisp
+;; org-superstar
+(use-package org-superstar  ;; Improved version of org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  
+;; Org Bullet title sizes
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
+)
 
 #+END_SRC
 
 #+RESULTS:
 
-** Grammar & Spelling
+*** Grammar & Spelling
 #+BEGIN_SRC emacs-lisp
 (setq langtool-language-tool-server-jar "~/Emacs External Files/Grammatica & Spelling/LanguageTool-5.1-stable/languagetool-server.jar")
 (setq langtool-default-language "nl")
