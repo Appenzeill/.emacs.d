@@ -391,10 +391,11 @@
 
 *** Grammar & Spelling
 #+BEGIN_SRC emacs-lisp
-(setq langtool-language-tool-server-jar "~/Emacs External Files/Grammatica & Spelling/LanguageTool-5.1-stable/languagetool-server.jar")
+(setq langtool-language-tool-server-jar "~/Emacs External Files/Grammatica & Spelling/LanguageTool-5.0-stable/languagetool-server.jar")
 (setq langtool-default-language "nl")
 (use-package langtool 
    :ensure t)
 #+END_SRC
 
 #+RESULTS:
+
