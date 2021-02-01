@@ -4,14 +4,15 @@
 *** Scrollbar, Menubar, Titlebar & Toolbar
 #+BEGIN_SRC emacs-lisp
   ;; Hide Scroll bar,menu bar, tool bar
+  (setq default-frame-alist '((undecorated . t)))
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
-  ;;(setq default-frame-alist '((undecorated . t)))
 
 #+END_SRC
 
 #+RESULTS:
+: ((undecorated . t))
 
 *** Page numbering
 #+BEGIN_SRC emacs-lisp
@@ -186,7 +187,20 @@
 ** Programming, Scripting & Markup Langugages
 *** LSP
 #+BEGIN_SRC emacs-lisp
-(use-package lsp-mode :ensure t)
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (C-mode . lsp)
+         (C++-mode .lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+  (use-package lsp-ui :commands lsp-ui-mode)
+;; if you are helm user
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(setq lsp-headerline-breadcrumb-enable nil)
 #+END_SRC
 
 #+RESULTS:
@@ -260,10 +274,7 @@
 
 *** C/C++
 #+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable))
+
 #+END_SRC
 
 #+RESULTS:
@@ -384,7 +395,8 @@
   '(org-level-4 ((t (:inherit outline-4 :height 1.15))))
   '(org-level-5 ((t (:inherit outline-5 :height 1.1))))
 )
-
+(setq org-startup-indented t)           ;; Indent according to section
+(setq org-startup-with-inline-images t) ;; Display images in-buffer by default
 #+END_SRC
 
 #+RESULTS:
