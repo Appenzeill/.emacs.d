@@ -150,6 +150,11 @@
   :ensure t
   :init (global-flycheck-mode))
 #+END_SRC
+*** Safe files
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist
+     `(("." . ,(concat user-emacs-directory "backups"))))
+#+END_SRC
 ** Theming, Ricing & Aesthethics
 *** Theme & Font sizes
 #+BEGIN_SRC emacs-lisp
@@ -442,3 +447,9 @@
 
 #+RESULTS:
 
+** Daemon
+#+BEGIN_SRC emacs-lisp
+(server-start)
+#+END_SRC
+
+#+RESULTS:
