@@ -196,21 +196,42 @@
 
 ** Programming, Scripting & Markup Langugages
 *** LSP
+**** Main setup
 #+BEGIN_SRC emacs-lisp
+(use-package company-lsp
+  :ensure t
+  :config
+  (push 'company-lsp company-backends)
+  (add-hook 'after-init-hook 'global-company-mode))
+
 (use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (C-mode . lsp)
-         (C++-mode .lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+  :ensure t
   :commands lsp)
-  (use-package lsp-ui :commands lsp-ui-mode)
-;; if you are helm user
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+
+;;(use-package lsp-ui
+;;  :ensure t)
+  
+(use-package lsp-clangd
+  :load-path
+  "~/.emacs.d/lsp-clangd"
+  :init
+  ;; for macOS
+  (when (equal system-type 'darwin)
+    (setq lsp-clangd-executable "/usr/local/opt/llvm/bin/clangd"))
+  ;; for linux machine with hostname "proton"
+  (when (string= (system-name) "proton")
+    (setq lsp-clangd-executable "/home/ddavis/software/llvm/head/bin/clangd"))
+  (add-hook 'c++-mode-hook 'lsp-clangd-c++-enable))
+  
+
+#+END_SRC
+
+#+RESULTS:
+
+**** UI tweaks
+#+BEGIN_SRC emacs-lisp
 (setq lsp-headerline-breadcrumb-enable nil)
+(setq lsp-ui-doc-enable nil)
 #+END_SRC
 
 #+RESULTS:
@@ -447,9 +468,3 @@
 
 #+RESULTS:
 
-** Daemon
-#+BEGIN_SRC emacs-lisp
-(server-start)
-#+END_SRC
-
-#+RESULTS:
