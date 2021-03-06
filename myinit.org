@@ -182,53 +182,39 @@
 ** Code completion & stuff
 *** LSP
 #+BEGIN_SRC emacs-lisp
- (setq lsp-keymap-prefix "C-c l")
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c-mode . lsp)
-         (c++-mode .lsp)
+         (C++-mode . lsp)
+         (python-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
-#+END_SRC
-
-#+RESULTS:
-: t
-
-**** UI tweaks
-#+BEGIN_SRC emacs-lisp
+  
 (use-package lsp-ui :commands lsp-ui-mode)
-
 (setq lsp-headerline-breadcrumb-enable nil)
 (setq lsp-ui-doc-enable nil)
 #+END_SRC
-
-#+RESULTS:
-
-#+RESULTS
-**** Hooks
-#+BEGIN_SRC emacs-lisp
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
-#+END_SRC
-
-#+RESULTS:
-| lsp | lsp-clangd-c++-enable |
-
 *** Company mode
-#+BEGIN_SRC emacs-lisp
-;; Company mode
+#+begin_src emacs-lisp
+;; company mode
 (use-package company 
    :ensure t)
-#+END_SRC
 
-#+RESULTS:
-
+#+end_src
 *** Flycheck
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
+  :ensure t)
 #+END_SRC
+*** Dap mode
+#+BEGIN_SRC emacs-lisp
+(use-package dap-mode
+  :ensure t)
+#+END_SRC
+
 ** Magit
 #+BEGIN_SRC emacs-lisp
 ;; Magit 
