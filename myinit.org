@@ -182,21 +182,19 @@
 ** Code completion & stuff
 *** LSP
 #+BEGIN_SRC emacs-lisp
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (C++-mode . lsp)
-         (python-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  (use-package lsp-mode
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook ((C++-mode . lsp)
+           (python-mode . lsp)
+           (rust-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
   
-(use-package lsp-ui :commands lsp-ui-mode)
-(setq lsp-headerline-breadcrumb-enable nil)
-(setq lsp-ui-doc-enable nil)
-(add-hook 'c++-mode-hook 'lsp)
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-ui-doc-enable nil)
+  (add-hook 'c++-mode-hook 'lsp)
 #+END_SRC
 
 #+RESULTS:
@@ -216,8 +214,8 @@
 #+END_SRC
 *** Dap mode
 #+BEGIN_SRC emacs-lisp
-(use-package dap-mode
-  :ensure t)
+;;(use-package dap-mode
+;;  :ensure t)
 #+END_SRC
 
 *** Cmake
@@ -250,37 +248,10 @@
 | (lambda nil (yas-activate-extra-mode 'fundamental-mode)) | yas-minor-mode-set-explicitly |
 
 *** Rust
-#+BEGIN_SRC emacs-lisp
-;; Rust major mode
-(use-package rust-mode 
-   :ensure t)
- 
-;; Racer 
-(use-package racer 
-   :ensure t)
-
-(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
-(setq racer-rust-src-path "/home/daan/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src") ;; Rust source code PATH
-
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-
-;; Cargo minor mode
-(use-package cargo 
-   :ensure t)
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-
-;; Eshell automaticly compiles project
-
+#+BEGIN_SRC bash
+rustup component add rust-src 
+rustup +nightly component add rust-analyzer-preview
 #+END_SRC
-
-#+RESULTS:
-| cargo-minor-mode | racer-mode |
 *** Python
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
@@ -293,10 +264,8 @@
 
 ** Magit
 #+BEGIN_SRC emacs-lisp
-;; Magit 
 (use-package magit
    :ensure t)
-   
 #+END_SRC
 
 #+RESULTS:
@@ -439,3 +408,9 @@
 
 #+RESULTS:
 
+** Applications
+*** Elpher
+#+BEGIN_SRC emacs-lisp
+  (use-package elpher
+     :ensure t)
+#+END_SRC
