@@ -25,4 +25,5 @@ This is my personal emacs config roughly based on the one from matman26.
 
 ;; Configuratie file.
 (org-babel-load-file "/home/daan/.emacs.d/myinit.org")
+(org-babel-load-file "~/emacs-additional-config/config.org")
 #+END_SRC
