@@ -16,6 +16,7 @@ This is my personal emacs config roughly based on the one from matman26.
   (require 'use-package))
   
 ;; Standaard packages.
+(setq evil-want-keybinding nil)
 (use-package evil
 	:ensure t)
 (evil-mode 1)
