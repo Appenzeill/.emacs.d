@@ -114,10 +114,15 @@
 : t
 *** Evil
 #+BEGIN_SRC emacs-lisp
-;; evil tutor 
-(use-package evil-tutor 
-   :ensure t)
-(which-key-mode)
+  ;; evil tutor
+  (use-package evil-tutor 
+       :ensure t)
+  (which-key-mode)
+
+  (use-package evil-collection 
+       :ensure t)
+
+(evil-collection-init)
 #+END_SRC
 
 #+RESULTS:
@@ -145,11 +150,9 @@
 #+BEGIN_SRC emacs-lisp
 (use-package poet-theme 
    :config 
-  (load-theme 'poet-dark t)
+  (load-theme 'adwaita t)
    :ensure t)
    
-(use-package vs-dark-theme
-:ensure t)   
 ;; Set default font
 ;;(set-face-attribute 'default nil
 ;;                    :family "Iosevka"
@@ -412,5 +415,10 @@ rustup +nightly component add rust-analyzer-preview
 *** Elpher
 #+BEGIN_SRC emacs-lisp
   (use-package elpher
+     :ensure t)
+#+END_SRC
+*** Elfeed
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
      :ensure t)
 #+END_SRC
