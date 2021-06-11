@@ -1,5 +1,7 @@
 #+STARTUP: showall
 * Personal Emacs Config 
+[[./showcase.png]]
+
 This is my personal emacs config roughly based on the one from matman26.
 #+BEGIN_SRC emacs-lisp
 (require 'package)
