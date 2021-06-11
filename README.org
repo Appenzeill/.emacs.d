@@ -3,8 +3,8 @@
 [[./showcase.png]]
 ** Setup
 My own personal emacs configuration, it has 2 parts.
-myinit.org and additional-config.org.
-The myinit.org has all the logic of my personal setup, the additional-config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
+myinit.org and config.org.
+The myinit.org has all the logic of my personal setup, the config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
 
 ** .emacs file contents
 #+BEGIN_SRC emacs-lisp
