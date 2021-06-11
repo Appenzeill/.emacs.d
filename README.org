@@ -1,8 +1,12 @@
 #+STARTUP: showall
-* Personal Emacs Config 
+* Daan's Personal Emacs Config 
 [[./showcase.png]]
+** Setup
+My own personal emacs configuration, it has 2 parts.
+myinit.org and additional-config.org.
+The myinit.org has all the logic of my personal setup, the additional-config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
 
-This is my personal emacs config roughly based on the one from matman26.
+** .emacs file contents
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -30,3 +34,6 @@ This is my personal emacs config roughly based on the one from matman26.
 (org-babel-load-file "~/.emacs.d/myinit.org")
 (org-babel-load-file "~/emacs-additional-config/config.org")
 #+END_SRC
+
+** Inspiration & credits
+This is my personal emacs config which started out with parts of code based on the config from matman26.
