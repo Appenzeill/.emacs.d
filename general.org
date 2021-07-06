@@ -1,0 +1,166 @@
+* General Emacs Config
+General config, this serves as a base to build upon using the modules in the module folder.
+** Theming & Aesthetics
+*** Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-themes 
+    :config 
+    (load-theme 'doom-gruvbox t)
+     :ensure t)
+#+END_SRC
+
+*** Hide Scrollbar, Menubar, Titlebar & Toolbar
+#+BEGIN_SRC emacs-lisp
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+#+END_SRC
+
+*** Modeline
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+#+END_SRC
+
+*** All The Icons
+**** General
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons 
+    :ensure t)
+#+END_SRC
+
+**** Dired
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons-dired 
+    :ensure t)
+
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+#+END_SRC
+
+**** Ibuffer
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons-ibuffer
+    :ensure t
+    :init (all-the-icons-ibuffer-mode 1))
+#+END_SRC
+
+** User Interface
+*** Dashboard
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
+  (setq dashboard-items '((recents  . 5)
+                          (projects . 5)
+                          (bookmarks . 5)
+                          (agenda . 5)))
+                        
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+#+END_SRC
+
+*** Helm
+Copied from matman26
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :init
+      (require 'helm-config)
+      (setq helm-split-window-in-side-p t
+            helm-move-to-line-cycle-in-source t)
+    :config 
+      (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
+      (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
+      (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
+      (define-key evil-ex-map "b" 'helm-buffers-list) ;; List buffers ( Vim way )
+      (global-set-key (kbd "C-x r b") 'helm-bookmarks) ;; Bookmarks menu
+      (global-set-key (kbd "C-x C-f") 'helm-find-files) ;; Finding files with Helm
+      (global-set-key (kbd "M-c") 'helm-calcul-expression) ;; Use Helm for calculations
+      (global-set-key (kbd "C-s") 'helm-occur)  ;; Replaces the default isearch keybinding
+      (global-set-key (kbd "C-h a") 'helm-apropos)  ;; Helmized apropos interface
+      (global-set-key (kbd "M-x") 'helm-M-x)  ;; Improved M-x menu
+      (global-set-key (kbd "M-y") 'helm-show-kill-ring)  ;; Show kill ring, pick something to paste
+    :ensure t)
+#+END_SRC
+
+** Evil (Vi emulation)
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-tutor 
+       :ensure t)
+  (which-key-mode)
+
+  (use-package evil-collection 
+       :ensure t)
+
+(evil-collection-init)
+#+END_SRC
+
+** Minor useful packages, Custom bindings & Tweaks
+*** Which key
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key 
+     :ensure t)
+  (which-key-mode)
+#+END_SRC
+
+*** Backup settings
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+       `(("." . ,(concat user-emacs-directory "backups"))))
+#+END_SRC
+
+*** Project Management
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile 
+     :ensure t
+     :config
+     (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+     (projectile-mode +1))
+
+  (use-package helm-projectile 
+     :ensure t
+     :config (helm-projectile-on))
+
+   
+     (bind-key "C-1" 'projectile-find-file)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; Point to root of emacs.d directory.
+  (setq path "~./emacs.d")
+
+  ;; Enable and dissable modules by setting them t or nil.
+  (setq programming nil)
+  (setq literate nil)
+  (setq applications nil)
+  (setq exwm nil)
+
+  ;; Load base config.
+  (org-babel-load-file "~/.emacs.d/general.org")
+
+  ;; Load modules that are t.
+  (when programming
+    (org-babel-load-file (concat path "/modules/programming.org")))
+
+  (when literate
+    (org-babel-load-file (concat path "/modules/literate.org")))
+
+  (when applications
+    (org-babel-load-file (concat path "/modules/applications.org")))
+
+  (when exwm
+    (org-babel-load-file (concat path "/modules/exwm.org")))
+
+  (require 'package)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+ 
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
