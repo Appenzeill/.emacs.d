@@ -3,10 +3,10 @@ General config, this serves as a base to build upon using the modules in the mod
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-themes 
-    :config 
-    (load-theme 'doom-gruvbox t)
+  (use-package gruvbox-theme
      :ensure t)
+     
+  (load-theme 'gruvbox)
 #+END_SRC
 
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
