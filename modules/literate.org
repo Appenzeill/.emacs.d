@@ -1,1 +1,42 @@
-.
+* Literate
+** Org
+#+BEGIN_SRC emacs-lisp
+(use-package org
+	:ensure t)
+#+END_SRC
+
+** PlantUML
+#+BEGIN_SRC emacs-lisp
+  (when
+  (file-exists-p "~/emacs-additional-config/PlantUML/plantuml.jar")
+  (progn
+    (setq org-plantuml-jar-path (expand-file-name "~/emacs-additional-config/PlantUML/plantuml.jar")
+    (use-package plantuml-mode 
+       :ensure t)))
+#+END_SRC
+
+** Langtool
+#+BEGIN_SRC emacs-lisp
+  (when
+  (file-exists-p "~/emacs-additional-config/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
+  (progn
+    (setq langtool-language-tool-server-jar "~/emacs-additional-config/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
+    (setq langtool-default-language "nl")
+    (use-package langtool 
+       :ensure t)))
+#+END_SRC
+
+** Superstar
+#+BEGIN_SRC emacs-lisp
+  (use-package org-superstar
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+#+END_SRC
+
+** Minor Tweaks
+#+BEGIN_SRC emacs-lisp
+  (setq org-startup-indented t)
+  (setq org-startup-with-inline-images t)
+  (setq org-indent-indentation-per-level 1)
+#+END_SRC

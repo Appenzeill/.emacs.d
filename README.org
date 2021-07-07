@@ -8,31 +8,43 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 
 ** .emacs file contents
 #+BEGIN_SRC emacs-lisp
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(package-initialize)
+  ;; Point to root of emacs.d directory.
+  (setq path "~./emacs.d")
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+  ;; Enable and dissable modules by setting them t or nil.
+  (setq programming nil)
+  (setq literate nil)
+  (setq applications nil)
+  (setq exwm nil)
 
-(eval-when-compile
-  (require 'use-package))
-  
-;; Standaard packages.
-(setq evil-want-keybinding nil)
-(use-package evil
-	:ensure t)
-(evil-mode 1)
-	
-(use-package org
-	:ensure t)
+  ;; Load base config.
+  (org-babel-load-file "~/.emacs.d/general.org")
 
-;; Configuratie file.
-(org-babel-load-file "~/.emacs.d/myinit.org")
-(org-babel-load-file "~/emacs-additional-config/config.org")
+  ;; Load modules that are t.
+  (when programming
+    (org-babel-load-file (concat path "/modules/programming.org")))
+
+  (when literate
+    (org-babel-load-file (concat path "/modules/literate.org")))
+
+  (when applications
+    (org-babel-load-file (concat path "/modules/applications.org")))
+
+  (when exwm
+    (org-babel-load-file (concat path "/modules/exwm.org")))
+
+  ;; Packaging configuration
+  (require 'package)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 ** Inspiration & credits
