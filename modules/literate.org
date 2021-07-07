@@ -10,7 +10,7 @@
   (when
   (file-exists-p "~/emacs-additional-config/PlantUML/plantuml.jar")
   (progn
-    (setq org-plantuml-jar-path (expand-file-name "~/emacs-additional-config/PlantUML/plantuml.jar")
+    (setq org-plantuml-jar-path (expand-file-name "~/emacs-additional-config/PlantUML/plantuml.jar"))
     (use-package plantuml-mode 
        :ensure t)))
 #+END_SRC

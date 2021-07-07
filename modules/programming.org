@@ -60,6 +60,8 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 #+begin_src emacs-lisp
   (use-package company 
      :ensure t)
+     
+  (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
 ** Flycheck

@@ -6,7 +6,7 @@ General config, this serves as a base to build upon using the modules in the mod
   (use-package gruvbox-theme
      :ensure t)
      
-  (load-theme 'gruvbox)
+  (load-theme 'gruvbox t)
 #+END_SRC
 
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
@@ -73,7 +73,6 @@ Copied from matman26
       (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
       (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
       (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
-      (define-key evil-ex-map "b" 'helm-buffers-list) ;; List buffers ( Vim way )
       (global-set-key (kbd "C-x r b") 'helm-bookmarks) ;; Bookmarks menu
       (global-set-key (kbd "C-x C-f") 'helm-find-files) ;; Finding files with Helm
       (global-set-key (kbd "M-c") 'helm-calcul-expression) ;; Use Helm for calculations
@@ -93,7 +92,6 @@ Copied from matman26
 
   (use-package evil-tutor 
        :ensure t)
-  (which-key-mode)
 
   (use-package evil-collection 
        :ensure t)
@@ -129,45 +127,4 @@ Copied from matman26
 
    
      (bind-key "C-1" 'projectile-find-file)
-#+END_SRC
-
-* .emacs
-#+BEGIN_SRC emacs-lisp
-  ;; Point to root of emacs.d directory.
-  (setq path "~./emacs.d")
-
-  ;; Enable and dissable modules by setting them t or nil.
-  (setq programming nil)
-  (setq literate nil)
-  (setq applications nil)
-  (setq exwm nil)
-
-  ;; Load base config.
-  (org-babel-load-file "~/.emacs.d/general.org")
-
-  ;; Load modules that are t.
-  (when programming
-    (org-babel-load-file (concat path "/modules/programming.org")))
-
-  (when literate
-    (org-babel-load-file (concat path "/modules/literate.org")))
-
-  (when applications
-    (org-babel-load-file (concat path "/modules/applications.org")))
-
-  (when exwm
-    (org-babel-load-file (concat path "/modules/exwm.org")))
-
-  ;; Packaging configuration
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-
-  (eval-when-compile
-    (require 'use-package))
 #+END_SRC
