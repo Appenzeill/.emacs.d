@@ -18,10 +18,13 @@ General config, this serves as a base to build upon using the modules in the mod
 
 *** Modeline
 #+BEGIN_SRC emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+  (use-package doom-modeline
+    :ensure t)
+  (doom-modeline-mode 1)
 #+END_SRC
+
+#+RESULTS:
+: t
 
 *** All The Icons
 **** General
@@ -52,13 +55,15 @@ General config, this serves as a base to build upon using the modules in the mod
   :ensure t
   :config
   (dashboard-setup-startup-hook))
-
+  
   (setq dashboard-items '((recents  . 5)
                           (projects . 5)
                           (bookmarks . 5)
                           (agenda . 5)))
-                        
+  
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
 #+END_SRC
 
 *** Helm
