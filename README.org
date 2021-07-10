@@ -17,6 +17,19 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
   (setq applications nil)
   (setq exwm nil)
 
+  ;; Packaging configuration
+  (require 'package)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+
   ;; Load base config.
   (org-babel-load-file "~/.emacs.d/general.org")
 
@@ -33,18 +46,7 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
   (when exwm
     (org-babel-load-file (concat path "/modules/exwm.org")))
 
-  ;; Packaging configuration
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-
-  (eval-when-compile
-    (require 'use-package))
 #+END_SRC
 
 ** Inspiration & credits
