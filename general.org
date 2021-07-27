@@ -125,6 +125,11 @@ Copied from matman26
        `(("." . ,(concat user-emacs-directory "backups"))))
 #+END_SRC
 
+*** Custom bindings
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c c") 'comment-or-uncomment-region)
+#+END_SRC
+
 ** Perspective
 #+BEGIN_SRC emacs-lisp
   (use-package perspective
@@ -135,6 +140,3 @@ Copied from matman26
     (persp-mode))
 #+END_SRC
 
-
-* test
-+src
