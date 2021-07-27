@@ -3,10 +3,11 @@ General config, this serves as a base to build upon using the modules in the mod
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package gruvbox-theme
+  (use-package doom-themes
      :ensure t)
      
-  (load-theme 'gruvbox t)
+  (load-theme 'doom-gruvbox t)
+
 #+END_SRC
 
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
@@ -14,7 +15,13 @@ General config, this serves as a base to build upon using the modules in the mod
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; assuming you are using a dark theme
+  (setq ns-use-proxy-icon nil)
+  (setq frame-title-format nil)
 #+END_SRC
+
+#+RESULTS:
 
 *** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -118,18 +125,16 @@ Copied from matman26
        `(("." . ,(concat user-emacs-directory "backups"))))
 #+END_SRC
 
-*** Project Management
+** Perspective
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile 
-     :ensure t
-     :config
-     (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-     (projectile-mode +1))
-
-  (use-package helm-projectile 
-     :ensure t
-     :config (helm-projectile-on))
-
-   
-     (bind-key "C-1" 'projectile-find-file)
+  (use-package perspective
+    :ensure t  ; use `:straight t` if using straight.el!
+    :bind (("C-x k" . persp-kill-buffer*))
+    :bind (("C-x p" . persp-switch))
+    :init
+    (persp-mode))
 #+END_SRC
+
+
+* test
++src

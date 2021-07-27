@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: Code block 
+# name: Org Code block 
 # key: +src
 # --
-#+BEGIN_SRC ${1:language}
-${2:code}
+#+BEGIN_SRC ${1:emacs-lisp}
+
 #+END_SRC

@@ -8,12 +8,20 @@
 
 ** Languages
 *** Rust
+Simple bash commands to install needed dependicies.
 #+BEGIN_SRC bash
   rustup component add rust-src 
   rustup +nightly component add rust-analyzer-preview
 #+END_SRC
 
+Simple minimal setup for Rust mode.
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :ensure t)
+#+END_SRC
+
 *** Python
+Mininal packages for Elpy LSP server.
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
     :ensure t
@@ -22,38 +30,73 @@
 #+END_SRC
 
 ** LSP
+*** General LSP configuration
 LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 #+BEGIN_SRC emacs-lisp
+    ;;     (use-package lsp-mode
+    ;;       :commands lsp
+    ;;       :config
+    ;;       (progn
+    ;;         (add-hook 'prog-mode-hook #'lsp)
+    ;;         (lsp-register-client
+    ;;          (make-lsp-client :new-connection (lsp-tramp-connection
+    ;;                                            "clangd-10")
+    ;;                           :major-modes '(c-mode c++-mode)
+    ;;                           :remote? t
+    ;;                           :server-id 'clangd-remote))))
+  
+    ;;       (use-package lsp-ui :commands lsp-ui-mode)
+    ;;       (setq lsp-headerline-breadcrumb-enable nil)
+    ;;       (setq lsp-ui-doc-enable nil)
+    ;;       (add-hook 'c++-mode-hook 'lsp)
+    ;; ;;(use-package lsp-mode
+    ;; ;;    :init
+    ;;     ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    ;;     (setq lsp-keymap-prefix "C-c l")
+    ;;     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+    ;; 	   (c-mode . lsp)
+    ;; 	   ;; if you want which-key integration
+    ;; 	   (lsp-mode . lsp-enable-which-key-integration))
+    ;;     :commands lsp
+    ;;     )
+    ;; (use-package lsp-ui
+    ;;     :commands lsp-ui-mode)
+    ;; (setq lsp-headerline-breadcrumb-enable nil)
+    ;; (setq lsp-ui-doc-enable nil)
+    ;; (add-hook 'c++-mode-hook 'lsp)
+  
   (use-package lsp-mode
-    :commands lsp
-    :config
-    (progn
-      (add-hook 'prog-mode-hook #'lsp)
-      (lsp-register-client
-       (make-lsp-client :new-connection (lsp-tramp-connection
-                                         "clangd-10")
-                        :major-modes '(c-mode c++-mode)
-                        :remote? t
-                        :server-id 'clangd-remote))))
+    :ensure t
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (C-mode . lsp)
+           (Rust-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+#+END_SRC
 
-    (use-package lsp-ui :commands lsp-ui-mode)
-    (setq lsp-headerline-breadcrumb-enable nil)
-    (setq lsp-ui-doc-enable nil)
-    (add-hook 'c++-mode-hook 'lsp)
+*** LSP UI Tweaks 
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-ui-doc-enable nil)
 #+END_SRC
 
 ** Snippets
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-   :ensure t)
-   
-(setq yas-snippet-dirs
-   '("~/.emacs.d/snippets"))
-
-(yas-global-mode 1)
-(yas-reload-all)
-(add-hook 'yas-minor-mode-hook (lambda ()
-(yas-activate-extra-mode 'fundamental-mode)))
+  (use-package yasnippet
+     :ensure t)
+     
+  (setq yas-snippet-dirs
+     '("~/.emacs.d/snippets"))
+  
+  (yas-global-mode 1)
+  (yas-reload-all)
+  (add-hook 'yas-minor-mode-hook (lambda ()
+  (yas-activate-extra-mode 'fundamental-mode)))
 #+END_SRC
 
 ** Company Mode

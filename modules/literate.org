@@ -1,8 +1,19 @@
 * Literate
 ** Org
+*** Base Package
 #+BEGIN_SRC emacs-lisp
 (use-package org
 	:ensure t)
+#+END_SRC
+
+*** Literate
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages 'org-babel-load-languages'(
+				(C . t)
+				(python . t)
+				(plantuml . t)
+				(latex . t)
+				(shell . t)))
 #+END_SRC
 
 ** PlantUML
@@ -39,6 +50,7 @@
 ** Minor Tweaks
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-with-inline-images t)
+  (setq org-startup-indented t)
 #+END_SRC
 
 ** Custom Faces
@@ -58,4 +70,5 @@
   '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.15))))
   '(markdown-header-face-5 ((t (:inherit outline-5 :height 1.1))))
   '(variable-pitch ((t (:inherit outline-1 :height 1.0)))))
+  
 #+END_SRC
