@@ -3,10 +3,10 @@ General config, this serves as a base to build upon using the modules in the mod
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-themes
+  (use-package srcery-theme 
      :ensure t)
      
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'srcery t)
 
 #+END_SRC
 
