@@ -8,45 +8,49 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 
 ** .emacs file contents
 #+BEGIN_SRC emacs-lisp
-  ;; Point to root of emacs.d directory.
-  (setq path "~./emacs.d")
-
+  (setq path "~/.emacs.d")
+  (setq additional-path "~/.emacs-additional.d")
+  
   ;; Enable and dissable modules by setting them t or nil.
-  (setq programming nil)
-  (setq literate nil)
-  (setq applications nil)
-  (setq exwm nil)
-
+  (setq programming t)
+  (setq literate t)
+  (setq org-roam t)
+  (setq applications t)
+  
+  ;; Enable or dissable additional config and software. (Langtool, PlantUML and config)
+  (setq additional t)
+  
   ;; Packaging configuration
   (require 'package)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-
+  
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-
+  
   (eval-when-compile
     (require 'use-package))
-
+  
   ;; Load base config.
   (org-babel-load-file "~/.emacs.d/general.org")
-
+  
   ;; Load modules that are t.
   (when programming
     (org-babel-load-file (concat path "/modules/programming.org")))
-
+  
   (when literate
     (org-babel-load-file (concat path "/modules/literate.org")))
-
+  
+  (when literate
+    (org-babel-load-file (concat path "/modules/org-roam.org")))
+  
   (when applications
     (org-babel-load-file (concat path "/modules/applications.org")))
-
-  (when exwm
-    (org-babel-load-file (concat path "/modules/exwm.org")))
-
-
+  
+  (when additional
+    (org-babel-load-file (concat additional-path "/config.org")))
 #+END_SRC
 
 ** Inspiration & credits
