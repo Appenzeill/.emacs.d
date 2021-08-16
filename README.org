@@ -8,17 +8,18 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 
 ** .emacs file contents
 #+BEGIN_SRC emacs-lisp
+  ;; Point to root of emacs.d and additional directories.
   (setq path "~/.emacs.d")
   (setq additional-path "~/.emacs-additional.d")
   
   ;; Enable and dissable modules by setting them t or nil.
   (setq programming t)
   (setq literate t)
-  (setq org-roam t)
-  (setq applications t)
+  (setq org-roam nil)
+  (setq applications nil)
   
   ;; Enable or dissable additional config and software. (Langtool, PlantUML and config)
-  (setq additional t)
+  (setq additional nil)
   
   ;; Packaging configuration
   (require 'package)
