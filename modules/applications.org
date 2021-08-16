@@ -10,3 +10,14 @@
   (use-package elfeed
      :ensure t)
 #+END_SRC
+
+** GNUS
+#+BEGIN_SRC emacs-lisp
+  (use-package nnreddit
+     :ensure t)
+  
+  
+  (custom-set-variables '(gnus-select-method (quote (nnreddit ""))))
+#+END_SRC
+
+#+RESULTS:

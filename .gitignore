@@ -5,3 +5,11 @@ recentf
 projectile-bookmarks.eld
 **/transient/
 *.el
+session.*
+**/tramp
+**/url
+**/eshell
+.lsp*
+**.cache
+**#recentf#
+org-roam.db

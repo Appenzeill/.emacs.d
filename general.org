@@ -3,10 +3,10 @@ General config, this serves as a base to build upon using the modules in the mod
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
-  (use-package srcery-theme 
+  (use-package doom-themes 
      :ensure t)
      
-  (load-theme 'srcery t)
+  (load-theme 'doom-gruvbox t)
 
 #+END_SRC
 
@@ -18,10 +18,9 @@ General config, this serves as a base to build upon using the modules in the mod
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; assuming you are using a dark theme
   (setq ns-use-proxy-icon nil)
-  (setq frame-title-format nil)
+  (setq default-frame-alist '((undecorated . t)))
+  ;;(setq frame-title-format nil)
 #+END_SRC
-
-#+RESULTS:
 
 *** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -139,4 +138,3 @@ Copied from matman26
     :init
     (persp-mode))
 #+END_SRC
-
