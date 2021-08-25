@@ -1,5 +1,22 @@
 * General Emacs Config
 General config, this serves as a base to build upon using the modules in the module folder.
+** Package Management
+#+BEGIN_SRC emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+          'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  
+#+END_SRC
+
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
@@ -7,7 +24,6 @@ General config, this serves as a base to build upon using the modules in the mod
      :ensure t)
      
   (load-theme 'doom-gruvbox t)
-
 #+END_SRC
 
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
@@ -19,7 +35,6 @@ General config, this serves as a base to build upon using the modules in the mod
   (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; assuming you are using a dark theme
   (setq ns-use-proxy-icon nil)
   (setq default-frame-alist '((undecorated . t)))
-  ;;(setq frame-title-format nil)
 #+END_SRC
 
 *** Modeline
@@ -28,9 +43,6 @@ General config, this serves as a base to build upon using the modules in the mod
     :ensure t)
   (doom-modeline-mode 1)
 #+END_SRC
-
-#+RESULTS:
-: t
 
 *** All The Icons
 **** General
@@ -52,6 +64,13 @@ General config, this serves as a base to build upon using the modules in the mod
   (use-package all-the-icons-ibuffer
     :ensure t
     :init (all-the-icons-ibuffer-mode 1))
+#+END_SRC
+
+**** Completion
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons-completion
+    :ensure t)
+  (all-the-icons-completion-mode)
 #+END_SRC
 
 ** User Interface

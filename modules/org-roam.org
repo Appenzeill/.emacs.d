@@ -8,16 +8,53 @@
   :custom
   (org-roam-directory "~/RoamNotes")
   (org-roam-completion-everywhere t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
+  :bind (("C-c r l" . org-roam-buffer-toggle)
+         ("C-c r f" . org-roam-node-find)
+         ("C-c r i" . org-roam-node-insert)
+         ("C-c r c" . org-roam-capture)
          :map org-mode-map
          ("C-M-i"    . completion-at-point))
   :config
   (org-roam-setup))
 #+END_SRC
 
+#+RESULTS:
+: completion-at-point
+
 ** Sqlite
 #+BEGIN_SRC emacs-lisp
-
+  (use-package sqlite3 
+    :ensure t)
 #+END_SRC
+
+** Graph
+*** UI
+#+BEGIN_SRC emacs-lisp
+(use-package org-roam-ui
+  :straight
+    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+    :after org-roam
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+#+END_SRC
+
+#+RESULTS:
+: t
+
+
+*** Dependicies
+#+BEGIN_SRC emacs-lisp
+  (use-package websocket
+    :ensure t)
+    
+  (use-package simple-httpd
+    :ensure t)
+#+END_SRC
+
