@@ -88,7 +88,16 @@ General config, this serves as a base to build upon using the modules in the mod
   
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-set-heading-icons t)
+  (setq dashboard-page-separator "\n\f\n")
   (setq dashboard-set-file-icons t)
+  (setq dashboard-startup-banner 2)
+  
+#+END_SRC
+
+*** Breakline
+#+BEGIN_SRC emacs-lisp
+  (use-package page-break-lines
+    :ensure t)
 #+END_SRC
 
 *** Helm
@@ -146,6 +155,12 @@ Copied from matman26
 *** Custom bindings
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c c") 'comment-or-uncomment-region)
+#+END_SRC
+
+*** Undo Tree
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree 
+       :ensure t)
 #+END_SRC
 
 ** Perspective

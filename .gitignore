@@ -13,3 +13,4 @@ session.*
 **.cache
 **#recentf#
 org-roam.db
+**/straight

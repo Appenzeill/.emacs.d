@@ -1,4 +1,4 @@
-* Programming
+jjjjjjjjjjjjjjj* PROGRAMMINGuuu
 ** Version Control
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -46,7 +46,7 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 	    (add-hook 'prog-mode-hook #'lsp)
 	    (lsp-register-client
 	     (make-lsp-client :new-connection (lsp-tramp-connection
-					       "clangd-10")
+					       "clangd-11")
 			      :major-modes '(c-mode c++-mode)
 			      :remote? t
 			      :server-id 'clangd-remote))))

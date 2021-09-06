@@ -18,9 +18,6 @@
   (org-roam-setup))
 #+END_SRC
 
-#+RESULTS:
-: completion-at-point
-
 ** Sqlite
 #+BEGIN_SRC emacs-lisp
   (use-package sqlite3 
