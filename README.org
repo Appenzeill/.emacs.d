@@ -54,5 +54,19 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
     (org-babel-load-file (concat additional-path "/config.org")))
 #+END_SRC
 
+** Structure
+#+begin_example
+~/.emacs.d/
+├── general.org            general config file
+├── snippets               location of snippets
+├── modules                modules loaded by .emacs
+├───── applications.org    applications config, elfeed and more.
+├───── literate.org        literate config, org and more.
+├───── programming.org     programming config, LSP and more.
+├───── org-roam.org        org-roam config, org-roam keybindings and more.
+├───── mail.org            email config, notmuch and more.
+├── perspectives           location of perspectives
+#+end_example
+
 ** Inspiration & credits
 This is my personal emacs config which started out with parts of code based on the config from matman26.
