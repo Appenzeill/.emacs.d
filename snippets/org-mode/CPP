@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: C++
+# key: +cpp
+# --
+#+BEGIN_SRC C++
+  #include <iostream>
+  
+  int main() {
+    std::cout << "test" << std::endl;
+  }
+#+END_SRC
