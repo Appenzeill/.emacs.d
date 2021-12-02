@@ -67,6 +67,5 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 ├───── mail.org            email config, notmuch and more.
 ├── perspectives           location of perspectives
 #+end_example
-
 ** Inspiration & credits
 This is my personal emacs config which started out with parts of code based on the config from matman26.

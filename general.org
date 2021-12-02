@@ -2,19 +2,18 @@
 General config, this serves as a base to build upon using the modules in the module folder.
 ** Package Management
 #+BEGIN_SRC emacs-lisp
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-          'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-  
+  ;; (defvar bootstrap-version)
+  ;; (let ((bootstrap-file
+  ;;       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+  ;;       (bootstrap-version 5))
+  ;;   (unless (file-exists-p bootstrap-file)
+  ;;     (with-current-buffer
+  ;;         (url-retrieve-synchronously
+  ;;         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+  ;;         'silent 'inhibit-cookies)
+  ;;       (goto-char (point-max))
+  ;;       (eval-print-last-sexp)))
+  ;;   (load bootstrap-file nil 'nomessage))
 #+END_SRC
 
 ** Theming & Aesthetics
@@ -22,7 +21,6 @@ General config, this serves as a base to build upon using the modules in the mod
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes 
      :ensure t)
-     
   (load-theme 'doom-gruvbox t)
 #+END_SRC
 
@@ -32,7 +30,7 @@ General config, this serves as a base to build upon using the modules in the mod
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; assuming you are using a dark theme
+  (add-to-list 'default-frame-alist '(ns-appearance . dark)) 
   (setq ns-use-proxy-icon nil)
   (setq default-frame-alist '((undecorated . t)))
 #+END_SRC
@@ -41,7 +39,7 @@ General config, this serves as a base to build upon using the modules in the mod
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
     :ensure t)
-  (doom-modeline-mode 1)
+  (doom-modeline-mode t)
 #+END_SRC
 
 *** All The Icons
@@ -81,18 +79,20 @@ General config, this serves as a base to build upon using the modules in the mod
   :config
   (dashboard-setup-startup-hook))
   
-  (setq dashboard-items '((recents  . 5)
-                          (projects . 5)
-                          (bookmarks . 5)
-                          (agenda . 5)))
+  ;; (setq dashboard-items '((recents  . 5)
+  ;;                         (projects . 5)
+  ;;                         (bookmarks . 5)
+  ;;                         (agenda . 5)))
   
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-page-separator "\n\f\n")
   (setq dashboard-set-file-icons t)
-  (setq dashboard-startup-banner 2)
   
 #+END_SRC
+
+#+RESULTS:
+: 10
 
 *** Breakline
 #+BEGIN_SRC emacs-lisp
@@ -152,9 +152,17 @@ Copied from matman26
        `(("." . ,(concat user-emacs-directory "backups"))))
 #+END_SRC
 
-*** Custom bindings
+*** No littering
+**** Package
+#+BEGIN_SRC emacs-lisp
+  (use-package no-littering
+     :ensure t)
+#+END_SRC
+
+**** Custom bindings
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c c") 'comment-or-uncomment-region)
+  (global-set-key (kbd "C-c e") 'org-edit-src-code)
 #+END_SRC
 
 *** Undo Tree
@@ -162,6 +170,22 @@ Copied from matman26
   (use-package undo-tree 
        :ensure t)
 #+END_SRC
+
+*** Restart Emacs
+#+BEGIN_SRC emacs-lisp
+  (use-package restart-emacs
+    :ensure t)
+#+END_SRC
+
+*** Multiple cursors
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :ensure t)
+  (global-set-key (kbd "C-c m c") 'mc/edit-lines)
+#+END_SRC
+
+#+RESULTS:
+: mc/edit-lines
 
 ** Perspective
 #+BEGIN_SRC emacs-lisp
@@ -172,3 +196,10 @@ Copied from matman26
     :init
     (persp-mode))
 #+END_SRC
+
+** Project Management
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t)
+#+END_SRC
+
