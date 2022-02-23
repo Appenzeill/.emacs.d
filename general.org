@@ -37,9 +37,9 @@ General config, this serves as a base to build upon using the modules in the mod
 
 *** Modeline
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-modeline
-    :ensure t)
-  (doom-modeline-mode t)
+  ;; (use-package doom-modeline
+  ;;   :ensure t)
+  ;; (doom-modeline-mode t)
 #+END_SRC
 
 *** All The Icons
