@@ -1,12 +1,14 @@
 * Programming
-** Company Mode
+** Assisting Modes & packages
+*** Company Mode
 #+begin_src emacs-lisp
   (use-package company 
      :ensure t)
      
   (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
-** Dap Mode
+
+*** Dap Mode
 #+BEGIN_SRC emacs-lisp
   (use-package dap-mode
     :ensure t)
@@ -14,11 +16,38 @@
 
 #+RESULTS:
 
-** Version Control
-*** Magit
+*** Smart Paran
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
+  (use-package smartparens
+   :ensure t)
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (add-hook 'org-mode-hook #'smartparens-mode)
+#+END_SRC
+
+*** Formatting
+#+BEGIN_SRC emacs-lisp
+  (use-package format-all
+    :ensure t)
+#+END_SRC
+
+*** Snippets
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
      :ensure t)
+     
+  (setq yas-snippet-dirs
+     '("~/.emacs.d/snippets"))
+  
+  (yas-global-mode 1)
+  (yas-reload-all)
+  (add-hook 'yas-minor-mode-hook (lambda ()
+  (yas-activate-extra-mode 'fundamental-mode)))
+#+END_SRC
+
+*** Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t)
 #+END_SRC
 
 ** Languages
@@ -65,6 +94,7 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
     (setq lsp-keymap-prefix "C-c l")
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
            (python-mode . lsp)
+           (c++-mode . lsp)
            ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
@@ -88,38 +118,11 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
   (setq lsp-ui-doc-enable nil)
 #+END_SRC
 
-** Snippets
+** Version Control
+*** Magit
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
+  (use-package magit
      :ensure t)
-     
-  (setq yas-snippet-dirs
-     '("~/.emacs.d/snippets"))
-  
-  (yas-global-mode 1)
-  (yas-reload-all)
-  (add-hook 'yas-minor-mode-hook (lambda ()
-  (yas-activate-extra-mode 'fundamental-mode)))
-#+END_SRC
-
-** Flycheck
-#+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :ensure t)
-#+END_SRC
-
-** Smart Paran
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-   :ensure t)
-  (add-hook 'prog-mode-hook #'smartparens-mode)
-  (add-hook 'org-mode-hook #'smartparens-mode)
-#+END_SRC
-
-** Formatting
-#+BEGIN_SRC emacs-lisp
-  (use-package format-all
-    :ensure t)
 #+END_SRC
 
 ** Jupyter notebook

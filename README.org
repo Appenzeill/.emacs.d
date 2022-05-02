@@ -44,7 +44,7 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
   (when literate
     (org-babel-load-file (concat path "/modules/literate.org")))
   
-  (when literate
+  (when org-roam
     (org-babel-load-file (concat path "/modules/org-roam.org")))
   
   (when applications
