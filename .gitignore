@@ -14,3 +14,5 @@ session.*
 **#recentf#
 org-roam.db
 **/straight
+**/elpy
+**/var

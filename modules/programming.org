@@ -6,6 +6,13 @@
      
   (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
+** Dap Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package dap-mode
+    :ensure t)
+#+END_SRC
+
+#+RESULTS:
 
 ** Version Control
 *** Magit
@@ -16,14 +23,11 @@
 
 ** Languages
 *** Python
-#+BEGIN_SRC emacs-lisp
-(use-package lsp-jedi
-  :ensure t
-  :config
-  (with-eval-after-load "lsp-mode"
-    (add-to-list 'lsp-disabled-clients 'pyls)
-    (add-to-list 'lsp-enabled-clients 'jedi)))
+Install the LSP server for python.
+#+BEGIN_SRC bash
+  pip install 'python-lsp-server[all]'
 #+END_SRC
+
 *** Rust
 Simple bash commands to install needed dependicies.
 #+BEGIN_SRC bash
@@ -55,19 +59,26 @@ Simple minimal setup for Rust mode.
 *** General LSP configuration
 LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 #+BEGIN_SRC emacs-lisp
-    (use-package lsp-mode
-      :commands lsp
+  (use-package lsp-mode
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (python-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+  ;; optionally
+  (use-package lsp-ui :commands lsp-ui-mode)
+  ;; if you are helm user
+  (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+  ;; optionally if you want to use debugger
+  (use-package dap-mode)
+  ;; optional if you want which-key integration
+  (use-package which-key
       :config
-      (progn
-        (add-hook 'prog-mode-hook #'lsp)
-        (lsp-register-client
-         (make-lsp-client :new-connection (lsp-tramp-connection "clangd-10")
-                          :major-modes '(c-mode c++-mode)
-                          :remote? t
-                          :server-id 'clangd-remote))))
-    
-    (setq lsp-headerline-breadcrumb-enable nil)
-    (add-hook 'c++-mode-hook 'lsp)
+      (which-key-mode))
 #+END_SRC
 
 *** LSP UI Tweaks 
@@ -116,5 +127,3 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
   (use-package jupyter
     :ensure t)
 #+END_SRC
-
-#+RESULTS:
