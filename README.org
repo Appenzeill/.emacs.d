@@ -67,5 +67,32 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 ├───── mail.org            email config, notmuch and more.
 ├── perspectives           location of perspectives
 #+end_example
+
+** Upcomming revamp
+My config has become a bit stale and lacks propper support for my daily workflow.
+So I will revamp it when I have some free time left.
+*** Languages
+- [ ] Python support
+- [ ] More dynamic LSP support (ssh support, multiple languages etc)
+*** Visual
+- [ ] Make dashboard more modern/personal
+- [ ] Change default font to Iosvka when available on the system
+- [ ] Ligatures
+- [ ] Emoji support
+- [ ] Change theme
+- [ ] Make light and darkmode theme switcher function
+*** Org-Roam
+- [ ] Organize my notes better
+- [ ] Use it more in my life
+*** Try packages
+- [ ] Popper
+- [ ] Vertico
+- [ ] Modus themes
+*** Remove bloat/unused packages
+Make emacs more lean by removing unused packages and files. mail.org for example.
+*** Additional
+- [ ] Try Nyxt and integrate it with emacs
+- [ ] Try vterm
+
 ** Inspiration & credits
 This is my personal emacs config which started out with parts of code based on the config from matman26.
