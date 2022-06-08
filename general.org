@@ -1,21 +1,5 @@
 * General Emacs Config
 General config, this serves as a base to build upon using the modules in the module folder.
-** Package Management
-#+BEGIN_SRC emacs-lisp
-  ;; (defvar bootstrap-version)
-  ;; (let ((bootstrap-file
-  ;;       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-  ;;       (bootstrap-version 5))
-  ;;   (unless (file-exists-p bootstrap-file)
-  ;;     (with-current-buffer
-  ;;         (url-retrieve-synchronously
-  ;;         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-  ;;         'silent 'inhibit-cookies)
-  ;;       (goto-char (point-max))
-  ;;       (eval-print-last-sexp)))
-  ;;   (load bootstrap-file nil 'nomessage))
-#+END_SRC
-
 ** Theming & Aesthetics
 *** Theme
 #+BEGIN_SRC emacs-lisp
@@ -63,6 +47,14 @@ General config, this serves as a base to build upon using the modules in the mod
     :ensure t)
   (all-the-icons-completion-mode)
 #+END_SRC
+
+*** Smooth scroll
+#+BEGIN_SRC emacs-lisp
+  (use-package smooth-scroll
+    :ensure t)
+#+END_SRC
+
+#+RESULTS:
 
 ** User Interface
 *** Dashboard
