@@ -113,7 +113,9 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 
 *** LSP UI Tweaks 
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :commands lsp-ui-mode
+    :ensure t)
   (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-ui-doc-enable nil)
 #+END_SRC

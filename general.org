@@ -172,6 +172,8 @@ Copied from matman26
     :bind (("C-x p" . persp-switch))
     :init
     (persp-mode))
+  (customize-set-variable 'persp-mode-prefix-key (kbd "C-c M-p"))
+  (setq persp-suppress-no-prefix-key-warning t)
 #+END_SRC
 
 ** Project Management
