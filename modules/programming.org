@@ -109,6 +109,7 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
   (use-package which-key
       :config
       (which-key-mode))
+  ;; (setq lsp-clients-kotlin-server-executable "~/Development/Persoonlijk/kotlin-language-server/server/build/install/server/bin/")
 #+END_SRC
 
 *** LSP UI Tweaks 

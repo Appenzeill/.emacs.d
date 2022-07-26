@@ -4,4 +4,14 @@
   (use-package platformio-mode
      :ensure t)
 #+END_SRC
-** CCLS
+** Custom Functions
+*** LSP
+#+BEGIN_SRC emacs-lisp
+  (defun platformio-compile-commands ()
+    "Documentation"
+    (interactive)
+    (shell-command "pio run -t compiledb"))
+#+END_SRC
+
+#+RESULTS:
+: platformio-compile-commands
