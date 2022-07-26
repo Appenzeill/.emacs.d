@@ -11,45 +11,49 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
   ;; Point to root of emacs.d and additional directories.
   (setq path "~/.emacs.d")
   (setq additional-path "~/.emacs-additional.d")
-  
+
   ;; Enable and dissable modules by setting them t or nil.
   (setq programming t)
   (setq literate t)
-  (setq org-roam nil)
-  (setq applications nil)
-  
+  (setq org-roam t)
+  (setq applications t)
+  (setq embedded t)
+
   ;; Enable or dissable additional config and software. (Langtool, PlantUML and config)
-  (setq additional nil)
-  
+  (setq additional t)
+
   ;; Packaging configuration
   (require 'package)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-  
+
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  
+
   (eval-when-compile
     (require 'use-package))
-  
+
   ;; Load base config.
   (org-babel-load-file "~/.emacs.d/general.org")
-  
+
   ;; Load modules that are t.
   (when programming
     (org-babel-load-file (concat path "/modules/programming.org")))
-  
+
   (when literate
     (org-babel-load-file (concat path "/modules/literate.org")))
-  
-  (when org-roam
+
+  (when literate
     (org-babel-load-file (concat path "/modules/org-roam.org")))
-  
+
   (when applications
+    (org-babel-load-file (concat path "/modules/embedded.org")))
+
+  (when embedded
     (org-babel-load-file (concat path "/modules/applications.org")))
-  
+
   (when additional
     (org-babel-load-file (concat additional-path "/config.org")))
 #+END_SRC
