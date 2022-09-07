@@ -50,7 +50,7 @@
 ** Custom Faces
 #+BEGIN_SRC emacs-lisp
   (custom-set-faces
-  '(org-document-title ((t (:inherit outline-1 :height 1.2))))
+  '(org-document-title ((t (:inherit outline-1 :height 1.3))))
   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
   '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
@@ -64,5 +64,4 @@
   '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.15))))
   '(markdown-header-face-5 ((t (:inherit outline-5 :height 1.1))))
   '(variable-pitch ((t (:inherit outline-1 :height 1.0)))))
-  
 #+END_SRC
