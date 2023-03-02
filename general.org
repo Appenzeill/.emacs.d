@@ -81,11 +81,12 @@ General config, this serves as a base to build upon using the modules in the mod
 Copied from matman26
 #+BEGIN_SRC emacs-lisp
   (use-package helm
-    :init
-      (require 'helm-config)
-      (setq helm-split-window-in-side-p t
-            helm-move-to-line-cycle-in-source t)
-    :config 
+    ;; :init
+    ;;   (require 'helm-config)
+    ;;   (setq helm-split-window-in-side-p t
+    ;;         helm-move-to-line-cycle-in-source t)
+    ;;
+      :config 
       (helm-mode 1) ;; Most of Emacs prompts become helm-enabled
       (helm-autoresize-mode 1) ;; Helm resizes according to the number of candidates
       (global-set-key (kbd "C-x b") 'helm-buffers-list) ;; List buffers ( Emacs way )
@@ -168,12 +169,11 @@ Copied from matman26
 #+BEGIN_SRC emacs-lisp
   (use-package perspective
     :ensure t  ; use `:straight t` if using straight.el!
-    :bind (("C-x k" . persp-kill-buffer*))
-    :bind (("C-x p" . persp-switch))
+    :bind ("C-x k" . persp-kill-buffer*)
+    :bind ("C-x p" . persp-switch)
+    :custom (persp-mode-prefix-key (kbd "C-x m"))  ; pick your own prefix key here
     :init
     (persp-mode))
-  (customize-set-variable 'persp-mode-prefix-key (kbd "C-c M-p"))
-  (setq persp-suppress-no-prefix-key-warning t)
 #+END_SRC
 
 ** Project Management

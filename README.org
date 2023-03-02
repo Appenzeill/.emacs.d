@@ -35,6 +35,20 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
   (eval-when-compile
     (require 'use-package))
 
+  ;; use straigh.el instead of package.el
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
   ;; Load base config.
   (org-babel-load-file "~/.emacs.d/general.org")
 
