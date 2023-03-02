@@ -1,4 +1,6 @@
 * Programming
+** LSP
+*** General LSP configuration
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
    :commands lsp
@@ -16,6 +18,16 @@
    (setq lsp-ui-doc-enable nil)
    (add-hook 'c++-mode-hook 'lsp)
 #+END_SRC
+LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
+
+*** LSP UI Tweaks 
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ui
+    :commands lsp-ui-mode
+    :ensure t)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-ui-doc-enable nil)
+#+END_SRC
 
 ** Assisting Modes & packages
 *** Company Mode
@@ -31,8 +43,6 @@
   (use-package dap-mode
     :ensure t)
 #+END_SRC
-
-#+RESULTS:
 
 *** Smart Paran
 #+BEGIN_SRC emacs-lisp
@@ -102,43 +112,6 @@ Simple minimal setup for Rust mode.
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 #+END_SRC
 
-** LSP
-*** General LSP configuration
-LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :init
-  ;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  ;;   (setq lsp-keymap-prefix "C-c l")
-  ;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-  ;;          (python-mode . lsp)
-  ;;          (c++-mode . lsp)
-  ;;          ;; if you want which-key integration
-  ;;          (lsp-mode . lsp-enable-which-key-integration))
-  ;;   :commands lsp)
-
-  ;; ;; optionally
-  ;; (use-package lsp-ui :commands lsp-ui-mode)
-  ;; ;; if you are helm user
-  ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
-  ;; ;; optionally if you want to use debugger
-  ;; (use-package dap-mode)
-  ;; ;; optional if you want which-key integration
-  ;; (use-package which-key
-  ;;     :config
-  ;;     (which-key-mode))
-  ;; (setq lsp-clients-kotlin-server-executable "~/Development/Persoonlijk/kotlin-language-server/server/build/install/server/bin/")
-#+END_SRC
-
-*** LSP UI Tweaks 
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-ui
-    :commands lsp-ui-mode
-    :ensure t)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-ui-doc-enable nil)
-#+END_SRC
-
 ** Version Control
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -154,13 +127,6 @@ LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
 
 ** Toolbox
 #+BEGIN_SRC emacs-lisp
-(use-package toolbox-tramp
-  :straight (toolbox-tramp :type git
-			     :host github
-			     :repo "fejfighter/toolbox-tramp")
-  :custom
-  (toolbox-tramp-flatpak-wrap t)) ; Use `flatpak-spawn' when conecting
+  (add-to-list 'load-path "~/.emacs.d/toolbox-tramp/")
+  (require 'toolbox-tramp)
 #+END_SRC
-
-#+RESULTS:
-
