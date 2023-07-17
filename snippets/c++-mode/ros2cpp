@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: ROS2 Node cpp file
+# key: +ros2cpp
+# --
+
+#include "../include/$2/$2.hpp"
+
+${1:ClassController}::$1(): Node("${2:class_controller}") {
+    _subscription = this->create_subscription<std_msgs::msg::String>(
+		    "${3:subscriber_topic}", 10, std::bind(&$1::topic_callback, this, _1));
+
+    _publisher = this->create_publisher<std_msgs::msg::String>("${3:publisher_topic}", 10);
+}
+
+$1::~$1() {}
+
+void $1::topic_callback(const std_msgs::msg::String & msg) const {
+    _publisher->publish(message);
+}

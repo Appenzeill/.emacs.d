@@ -1,0 +1,60 @@
+# -*- mode: snippet -*-
+# name: ROS2 Node hpp file
+# key: +ros2hpp
+# --
+
+#ifndef ${1:CLASS_CONTROLLER}
+#define $1
+
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+/**
+* \class ${2:ClassController}
+* \brief Een korte beschrijving waarvoor de class verantwoordelijk is.
+*
+* \details
+* Een gedetaileerde beschrijving waarvoor de class
+* verantwoordelijk voor is.
+*/
+class ${2:ClassController} : public rclcpp::Node {
+public:
+    /**
+     * De class constructor.
+     *
+     * \details
+     * Configureert de termios struct, en opend een seriële connectie.
+     */
+    ${2:ClassController}();
+
+    /**
+     * De class destructor.
+     *
+     * \details
+     * Sluit de seriële connectie.
+     */
+    ~${2:ClassController}();
+
+private:
+    /**
+     * \fn topic_callback 
+     * @param Een const std_msgs::msg::String msg.
+     * \brief Een subscriber die luisterd naar de arduino_serial topic.
+     *
+     * \details
+     * De functie wacht op een bericht van het arduino_serial topic,
+     * en wanneer deze binnen komt wordt de eerste char naar de arduino verstuurd.
+     */
+    void topic_callback(const std_msgs::msg::String & msg) const;
+
+    /** 
+     * Een ROS2 subscription SharedPtr.
+     */
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+
+    /** 
+     * Een ROS2 publisher SharedPtr.	
+     */
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+};
+#endif

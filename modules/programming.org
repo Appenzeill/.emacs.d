@@ -124,13 +124,3 @@ Simple minimal setup for Rust mode.
   (use-package jupyter
     :ensure t)
 #+END_SRC
-
-** Toolbox
-#+BEGIN_SRC emacs-lisp
-    ;; (add-to-list 'load-path "~/.emacs.d/toolbox-tramp/")
-    ;; (require 'toolbox-tramp)
-  (use-package toolbox-tramp
-    :straight (toolbox-tramp :type git
-                               :host github
-                               :repo "fejfighter/toolbox-tramp"))
-#+END_SRC

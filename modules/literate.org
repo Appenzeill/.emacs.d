@@ -10,6 +10,9 @@
 				(shell . t)))
 #+END_SRC
 
+*** Font
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
 ** PlantUML
 #+BEGIN_SRC emacs-lisp
   (when
@@ -45,6 +48,13 @@
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-with-inline-images t)
   (setq org-startup-indented t)
+
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Iosevka" :height 180 :weight thin))))
+   '(fixed-pitch ((t ( :family "Iosevka Fixed, Medium" :height 160)))))
+
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+END_SRC
 
 ** Custom Faces
