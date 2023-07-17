@@ -16,3 +16,4 @@ org-roam.db
 **/straight
 **/elpy
 **/var
+**/eln-cache
