@@ -3,8 +3,8 @@
 [[./showcase.png]]
 ** Setup
 My own personal emacs configuration, it has 2 parts.
-myinit.org and config.org.
-The myinit.org has all the logic of my personal setup, the config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
+general.org and config.org.
+The general.org has all the logic of my personal setup, the config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
 
 ** .emacs file contents
 #+BEGIN_SRC emacs-lisp
@@ -34,20 +34,6 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 
   (eval-when-compile
     (require 'use-package))
-
-  ;; use straigh.el instead of package.el
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
 
   ;; Load base config.
   (org-babel-load-file "~/.emacs.d/general.org")
@@ -82,36 +68,7 @@ The myinit.org has all the logic of my personal setup, the config.org is for mai
 ├───── literate.org        literate config, org and more.
 ├───── programming.org     programming config, LSP and more.
 ├───── org-roam.org        org-roam config, org-roam keybindings and more.
-├── perspectives           location of perspectives
 #+end_example
-
-** Upcomming revamp
-My config has become a bit stale and lacks propper support for my daily workflow.
-So I will revamp it when I have some free time left.
-*** Emacs Server
-- [ ] Make emacs run as a server on systems where that is setup.
-*** Languages
-- [ ] Python support
-- [ ] More dynamic LSP support (ssh support, multiple languages etc)
-*** Visual
-- [ ] Make dashboard more modern/personal
-- [ ] Change default font to Iosvka when available on the system
-- [ ] Ligatures
-- [ ] Emoji support
-- [ ] Change theme
-- [ ] Make light and darkmode theme switcher function
-*** Org-Roam
-- [ ] Organize my notes better
-- [ ] Use it more in my life
-*** Try packages
-- [ ] Popper
-- [ ] Vertico
-- [ ] Modus themes
-*** Remove bloat/unused packages
-Make emacs more lean by removing unused packages and files. mail.org for example.
-*** Additional
-- [ ] Try Nyxt and integrate it with emacs
-- [ ] Try vterm
 
 ** Inspiration & credits
 This is my personal emacs config which started out with parts of code based on the config from matman26.
