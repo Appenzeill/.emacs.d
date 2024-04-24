@@ -18,11 +18,11 @@ General config, this serves as a base to build upon using the modules in the mod
   (use-package vertico
     :ensure t
     :bind (:map vertico-map
-                ("C-j" . vertico-next)
-                ("C-k" . vertico-previous)
-                ("C-f" . vertico-exit)
-                :map minibuffer-local-map
-                ("M-h" . backward-kill-word))
+		("C-j" . vertico-next)
+		("C-k" . vertico-previous)
+		("C-f" . vertico-exit)
+		:map minibuffer-local-map
+		("M-h" . backward-kill-word))
     :custom
     (vertico-cycle t)
     :init
@@ -41,30 +41,35 @@ General config, this serves as a base to build upon using the modules in the mod
     (marginalia-align 'right)
     :init
     (marginalia-mode))
+
+  (use-package vertico-posframe
+    :ensure t
+    :init
+    (vertico-posframe-mode))
 #+END_SRC
 
 #+RESULTS:
 
-*** Telephone line
+*** Mode line
 #+BEGIN_SRC emacs-lisp
-  (use-package telephone-line
+  (use-package nano-modeline
     :ensure t)
-
-  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
-        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-        telephone-line-primary-right-separator 'telephone-line-cubed-right
-        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (setq telephone-line-height 24
-        telephone-line-evil-use-short-tag t)
-
-  (telephone-line-mode 1)
+  (powerline-default-theme)
 #+END_SRC
+
+#+RESULTS:
 
 *** Theme
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes 
      :ensure t)
   (load-theme 'doom-gruvbox t)
+#+END_SRC
+
+*** Font
+#+BEGIN_SRC emacs-lisp
+    (add-to-list 'default-frame-alist '(font . "Iosevka Fixed" ))
+    (set-face-attribute 'default t :font "Iosevka Fixed" )
 #+END_SRC
 
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
@@ -83,13 +88,7 @@ General config, this serves as a base to build upon using the modules in the mod
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons 
     :ensure t)
-
-  (use-package all-the-icons-completion
-    :after (marginalia all-the-icons)
-    :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-    :init
-    (all-the-icons-completion-mode))
-
+  
   (use-package all-the-icons-dired 
     :ensure t)
 
@@ -99,9 +98,6 @@ General config, this serves as a base to build upon using the modules in the mod
     :ensure t
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+END_SRC
-
-#+RESULTS:
-| all-the-icons-ibuffer-mode |
 
 ** Evil (Vi emulation)
 #+BEGIN_SRC emacs-lisp
@@ -173,5 +169,12 @@ General config, this serves as a base to build upon using the modules in the mod
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t)
+#+END_SRC
+
+** Superstar
+#+BEGIN_SRC emacs-lisp
+  (use-package org-superstar
+    :ensure t)
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+END_SRC
 

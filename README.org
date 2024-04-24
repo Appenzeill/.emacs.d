@@ -6,7 +6,7 @@ My own personal emacs configuration, it has 2 parts.
 general.org and config.org.
 The general.org has all the logic of my personal setup, the config.org is for mainly for personal information not relevant to the setup. Like RSS feeds.
 
-** .emacs file contents
+** init.el file content
 #+BEGIN_SRC emacs-lisp
   ;; Point to root of emacs.d and additional directories.
   (setq path "~/.emacs.d")
@@ -45,15 +45,9 @@ The general.org has all the logic of my personal setup, the config.org is for ma
   (when literate
     (org-babel-load-file (concat path "/modules/literate.org")))
 
-  (when literate
-    (org-babel-load-file (concat path "/modules/org-roam.org")))
-
   (when applications
     (org-babel-load-file (concat path "/modules/embedded.org")))
-
-  (when embedded
-    (org-babel-load-file (concat path "/modules/applications.org")))
-
+  
   (when additional
     (org-babel-load-file (concat additional-path "/config.org")))
 #+END_SRC
