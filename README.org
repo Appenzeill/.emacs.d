@@ -45,9 +45,6 @@ The general.org has all the logic of my personal setup, the config.org is for ma
   (when literate
     (org-babel-load-file (concat path "/modules/literate.org")))
 
-  (when applications
-    (org-babel-load-file (concat path "/modules/embedded.org")))
-  
   (when additional
     (org-babel-load-file (concat additional-path "/config.org")))
 #+END_SRC
@@ -58,7 +55,6 @@ The general.org has all the logic of my personal setup, the config.org is for ma
 ├── general.org            general config file
 ├── snippets               location of snippets
 ├── modules                modules loaded by .emacs
-├───── applications.org    applications config, elfeed and more.
 ├───── literate.org        literate config, org and more.
 ├───── programming.org     programming config, LSP and more.
 ├───── org-roam.org        org-roam config, org-roam keybindings and more.

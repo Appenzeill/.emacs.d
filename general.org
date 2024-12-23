@@ -2,6 +2,7 @@
 General config, this serves as a base to build upon using the modules in the module folder.
 ** User Interface, Theming & Aesthetics
 *** Dashboard
+Add a fancy dashboard to the startup screen.
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
   :ensure t
@@ -14,6 +15,7 @@ General config, this serves as a base to build upon using the modules in the mod
 #+END_SRC
 
 *** Vertico
+Minimal completion UI.
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :ensure t
@@ -41,38 +43,57 @@ General config, this serves as a base to build upon using the modules in the mod
     (marginalia-align 'right)
     :init
     (marginalia-mode))
+#+END_SRC
 
+Center the vertico frame in the middle of Emacs.
+#+BEGIN_SRC emacs-lisp
   (use-package vertico-posframe
     :ensure t
     :init
     (vertico-posframe-mode))
 #+END_SRC
 
-#+RESULTS:
-
-*** Mode line
-#+BEGIN_SRC emacs-lisp
-  (use-package nano-modeline
-    :ensure t)
-  (powerline-default-theme)
-#+END_SRC
-
-#+RESULTS:
-
 *** Theme
+**** Doom Themes
+Use Gruvbox as the theme for the editor.
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes 
      :ensure t)
   (load-theme 'doom-gruvbox t)
 #+END_SRC
 
-*** Font
+**** Automatic Theme and Font
 #+BEGIN_SRC emacs-lisp
-    (add-to-list 'default-frame-alist '(font . "Iosevka Fixed" ))
-    (set-face-attribute 'default t :font "Iosevka Fixed" )
+  (use-package auto-dark
+    :ensure t
+    :custom
+    (auto-dark-themes '((doom-gruvbox) (doom-gruvbox-light)))
+
+    :hook
+    (auto-dark-dark-mode
+     . (lambda ()
+	 ;; something to execute when dark mode is detected
+	 (vertico-posframe-cleanup)
+	 ))
+    (auto-dark-light-mode
+     . (lambda ()
+	 ;; something to execute when dark mode is detected
+	 (vertico-posframe-cleanup)
+	 ))
+    :init (auto-dark-mode))
 #+END_SRC
 
+*** Font
+Use Iosevka as the font for Emacs.
+#+BEGIN_SRC emacs-lisp
+  ;; (add-to-list 'default-frame-alist '(font . "Iosevka Fixed" ))
+  ;; (set-face-attribute 'default t :font "Iosevka Fixed" )
+#+END_SRC
+
+#+RESULTS:
+
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
+Hide UI elements to create a cleaner UI.
 #+BEGIN_SRC emacs-lisp
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
@@ -81,10 +102,13 @@ General config, this serves as a base to build upon using the modules in the mod
   (add-to-list 'default-frame-alist '(ns-appearance . dark)) 
   (setq ns-use-proxy-icon nil)
   (setq default-frame-alist '((undecorated . t)))
+
+  (add-to-list 'default-frame-alist
+             '(vertical-scroll-bars . nil))
 #+END_SRC
 
 *** All The Icons
-**** General
+Improve visuals by adding icons.
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons 
     :ensure t)
@@ -99,7 +123,24 @@ General config, this serves as a base to build upon using the modules in the mod
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+END_SRC
 
+*** Org Modern
+use the org-modern package to improve the visual look of org-mode.
+#+BEGIN_SRC emacs-lisp
+  (use-package org-modern
+	    :ensure t)
+  (global-org-modern-mode)
+#+END_SRC
+
+Add some padding to all frames.
+*** Padding
+#+BEGIN_SRC emacs-lisp
+  (use-package spacious-padding
+	    :ensure t)
+  (spacious-padding-mode t)
+#+END_SRC
+
 ** Evil (Vi emulation)
+Add Vim keybinds.
 #+BEGIN_SRC emacs-lisp
   (setq evil-want-keybinding nil)
   (use-package evil
