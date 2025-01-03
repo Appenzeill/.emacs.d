@@ -6,14 +6,17 @@
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/Notities")
+  
+  (if (display-graphic-p)                               ; if-part
+      (org-roam-directory "~/Notities") ; then-part
+    (org-roam-directory "~/storage/shared/Documents/Notities"))   ; else-part
   (org-roam-completion-everywhere t)
   :bind (("C-c r l" . org-roam-buffer-toggle)
-         ("C-c r f" . org-roam-node-find)
-         ("C-c r i" . org-roam-node-insert)
-         ("C-c r c" . org-roam-capture)
-         :map org-mode-map
-         ("C-M-i"    . completion-at-point))
+	 ("C-c r f" . org-roam-node-find)
+	 ("C-c r i" . org-roam-node-insert)
+	 ("C-c r c" . org-roam-capture)
+	 :map org-mode-map
+	 ("C-M-i"    . completion-at-point))
   :config
   (org-roam-setup))
 #+END_SRC

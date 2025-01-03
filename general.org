@@ -95,7 +95,6 @@ Use Iosevka as the font for Emacs.
 *** Hide Scrollbar, Menubar, Titlebar & Toolbar
 Hide UI elements to create a cleaner UI.
 #+BEGIN_SRC emacs-lisp
-  (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
@@ -104,7 +103,7 @@ Hide UI elements to create a cleaner UI.
   (setq default-frame-alist '((undecorated . t)))
 
   (add-to-list 'default-frame-alist
-             '(vertical-scroll-bars . nil))
+	       '(vertical-scroll-bars . nil))
 #+END_SRC
 
 *** All The Icons
@@ -219,3 +218,10 @@ Add Vim keybinds.
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+END_SRC
 
+
+
+#+BEGIN_SRC emacs-lisp
+  ;; (when (display-graphic-p)
+  ;;   (scroll-bar-mode -1))
+
+#+END_SRC
