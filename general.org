@@ -31,6 +31,16 @@ Add a fancy dashboard to the startup screen.
                                 (bookmarks    . "m")
                                 (agenda       . "a")
                                 ))
+    
+    (dashboard-startupify-list '(dashboard-insert-banner
+                                 dashboard-insert-newline
+  			       dashboard-insert-banner-title
+                                 dashboard-insert-newline
+                                 dashboard-insert-init-info
+                                 dashboard-insert-items
+                                 ))
+    (dashboard-banner-logo-title "Welcome back Operator.")
+
     :init
     (defun dashboard-insert-perspectives (list-size)
       "A hacky implemtation to add perspectives I use to my dashboard."
