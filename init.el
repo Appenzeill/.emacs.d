@@ -42,28 +42,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-vc-selected-packages
-   '((denote-search :url "https://github.com/lmq-10/denote-search" :doc "README.org"))))
+ '(custom-safe-themes
+   '("691d671429fa6c6d73098fc6ff05d4a14a323ea0a18787daeb93fde0e48ab18b"
+     default))
+ '(package-selected-packages
+   '(all-the-icons-dired all-the-icons-ibuffer auto-dark centered-window
+			 company dap-mode dashboard doom-themes
+			 evil-collection evil-tutor flycheck
+			 lsp-pyright lsp-ui magit marginalia
+			 no-littering org-modern org-roam
+			 org-superstar perspective projectile
+			 restart-emacs rust-mode smartparens
+			 spacious-padding sqlite3 undo-tree
+			 vertico-posframe yaml-mode yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t :background "#282828")))
- '(header-line ((t :box (:line-width 4 :color "#37302f" :style nil))))
- '(header-line-highlight ((t :box (:color "#ebdbb2"))))
- '(keycast-key ((t)))
- '(line-number ((t :background "#282828")))
- '(mode-line ((t :box (:line-width 6 :color "#37302f" :style nil))))
- '(mode-line-active ((t :box (:line-width 6 :color "#37302f" :style nil))))
- '(mode-line-highlight ((t :box (:color "#ebdbb2"))))
- '(mode-line-inactive ((t :box (:line-width 6 :color "#282828" :style nil))))
- '(tab-bar-tab ((t :box (:line-width 4 :color "#282828" :style nil))))
- '(tab-bar-tab-inactive ((t :box (:line-width 4 :color "#1d2021" :style nil))))
- '(tab-line-tab ((t)))
- '(tab-line-tab-active ((t)))
- '(tab-line-tab-inactive ((t)))
- '(vertical-border ((t :background "#282828" :foreground "#282828")))
- '(window-divider ((t (:background "#282828" :foreground "#282828"))))
- '(window-divider-first-pixel ((t (:background "#282828" :foreground "#282828"))))
- '(window-divider-last-pixel ((t (:background "#282828" :foreground "#282828")))))
+ )
