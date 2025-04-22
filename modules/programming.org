@@ -1,41 +1,5 @@
 * Programming
-** LSP
-*** General LSP configuration
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-   :commands lsp
-   :config
-   (progn
-     (lsp-register-client
-      (make-lsp-client :new-connection (lsp-tramp-connection
-                                        "clangd")
-                       :major-modes '(c-mode c++-mode)
-                       :remote? t
-                       :server-id 'clangd-remote))))
-
-   (setq lsp-headerline-breadcrumb-enable nil)
-   (setq lsp-ui-doc-enable nil)
-   (add-hook 'c++-mode-hook 'lsp)
-#+END_SRC
-
-LSP configuratie, clangd-10 is voor de Lubuntu VM van HU.
-
-*** LSP UI Tweaks 
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-ui
-    :commands lsp-ui-mode
-    :ensure t)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-ui-doc-enable nil)
-#+END_SRC
-
 ** Languages
-*** Python
-Install the LSP server for python.
-#+BEGIN_SRC bash
-  pip install 'python-lsp-server[all]'
-#+END_SRC
-
 *** Rust
 Simple bash commands to install needed dependicies.
 #+BEGIN_SRC bash
