@@ -43,7 +43,7 @@ Add a fancy dashboard to the startup screen.
 
     :init
     (defun dashboard-insert-perspectives (list-size)
-      "A hacky implemtation to add perspectives I use to my dashboard."
+      "A hacky implentation to add perspectives I use to my dashboard."
       (dashboard-insert-shortcut "perspectives" "p" "perspectives" nil)
       (dashboard-insert-navigator)
       (dashboard-insert-heading "Perspectives:")
@@ -79,6 +79,7 @@ Add a fancy dashboard to the startup screen.
   			     (persp-new "Roam")
   			     (persp-switch "Roam")
   			     (find-file "~/Notities/20250411154025-index_roam.org")
+  			     (org-roam-node-find)
   			     )
   		   (concat " " (all-the-icons-octicon "bookmark") " Roam "))
       )
@@ -277,13 +278,8 @@ Add Vim keybinds.
     :init
     (persp-mode))
 
+  ; rename standard perspective from "main" to "Dashboard"
   (persp-rename "Dashboard")
-#+END_SRC
-
-** Project Management
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t)
 #+END_SRC
 
 ** Superstar
@@ -292,11 +288,3 @@ Add Vim keybinds.
     :ensure t)
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+END_SRC
-
-
-** Centered window
-#+BEGIN_SRC emacs-lisp
-(use-package centered-window :ensure t)
-#+END_SRC
-
-#+RESULTS:
