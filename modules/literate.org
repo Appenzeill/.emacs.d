@@ -22,7 +22,8 @@
 
 ** Minor Tweaks
 #+BEGIN_SRC emacs-lisp
-  (setq org-startup-with-inline-images t)
-  (setq org-startup-indented t)
+    (setq org-startup-with-inline-images t)
+    (setq org-startup-indented t)
 #+END_SRC
+
 

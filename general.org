@@ -39,20 +39,21 @@ Add a fancy dashboard to the startup screen.
                                  dashboard-insert-init-info
                                  dashboard-insert-items
                                  ))
+    
     (dashboard-banner-logo-title "Welcome back Operator.")
-
     :init
     (defun dashboard-insert-perspectives (list-size)
       "A hacky implentation to add perspectives I use to my dashboard."
       (dashboard-insert-shortcut "perspectives" "p" "perspectives" nil)
       (dashboard-insert-navigator)
-      (dashboard-insert-heading "Perspectives:")
-      (insert " (p)")
+      (dashboard-insert-heading "Perspectives: ")
+      (insert "(p)")
       (insert "\n    ")
       (widget-create 'push-button
                      :notify (lambda (&rest ignore)
   			     (persp-new "Agenda")
   			     (persp-switch "Agenda")
+  			     (calendar-basic-setup)
   			     )
   		   (concat " " (all-the-icons-octicon "calendar") " Agenda "))
       (insert "\n    ")
@@ -60,7 +61,7 @@ Add a fancy dashboard to the startup screen.
                      :notify (lambda (&rest ignore)
   			     (persp-new "Development")
   			     (persp-switch "Development")
-  			     (find-file "~/Notities/20250411153947-index_development.org")
+  			     (find-file "~/Notities/roam/20250411153947-index_development.org")
   			     )
   		   (concat " " (all-the-icons-octicon "keyboard") " Development "))
       
@@ -78,7 +79,7 @@ Add a fancy dashboard to the startup screen.
                      :notify (lambda (&rest ignore)
   			     (persp-new "Roam")
   			     (persp-switch "Roam")
-  			     (find-file "~/Notities/20250411154025-index_roam.org")
+  			     (find-file "~/Notities/roam/20250411154025-index_roam.org")
   			     (org-roam-node-find)
   			     )
   		   (concat " " (all-the-icons-octicon "bookmark") " Roam "))
@@ -136,12 +137,19 @@ Center the vertico frame in the middle of Emacs.
 #+END_SRC
 
 *** Theme
-**** Doom Themes
+**** Doom Themes & Modeline
 Use Gruvbox as the theme for the editor.
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes 
      :ensure t)
   (load-theme 'doom-gruvbox t)
+#+END_SRC
+
+Use doom-modeline as modeline.
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
 #+END_SRC
 
 **** Automatic Theme and Font
@@ -196,12 +204,13 @@ Improve visuals by adding icons.
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+END_SRC
 
-*** Org Modern
+*** Org Modern & padding 
 use the org-modern package to improve the visual look of org-mode.
 #+BEGIN_SRC emacs-lisp
   (use-package org-modern
-	    :ensure t)
+  	    :ensure t)
   (global-org-modern-mode)
+  (global-visual-line-mode)
 #+END_SRC
 
 Add some padding to all frames.
@@ -287,4 +296,8 @@ Add Vim keybinds.
   (use-package org-superstar
     :ensure t)
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
