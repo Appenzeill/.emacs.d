@@ -1,6 +1,15 @@
 * General Emacs Config
 General config, this serves as a base to build upon using the modules in the module folder.
 ** User Interface, Theming & Aesthetics
+#+BEGIN_SRC emacs-lisp
+  ;; (defun flatpak-spawn-shell-command (original-function command &optional output-buffer error-buffer)
+  ;;   "Prepend the original shell-command with 'flatpak-spawn --host' so it can bypass the flatpak sandbox."
+  ;;   (let ((prepended-command (concat "flatpak-spawn --host " command)))
+  ;;     (funcall original-function prepended-command output-buffer error-buffer)))
+
+  ;; (advice-add 'shell-command :around #'flatpak-spawn-shell-command)
+#+End_SRC
+
 *** Dashboard
 Add a fancy dashboard to the startup screen.
 #+BEGIN_SRC emacs-lisp
@@ -213,8 +222,8 @@ use the org-modern package to improve the visual look of org-mode.
   (global-visual-line-mode)
 #+END_SRC
 
-Add some padding to all frames.
 *** Padding
+Add some padding to all frames.
 #+BEGIN_SRC emacs-lisp
   (use-package spacious-padding
 	    :ensure t)
@@ -244,6 +253,13 @@ Add Vim keybinds.
   (use-package which-key 
      :ensure t)
   (which-key-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key-posframe
+    :ensure t
+    :config
+    (which-key-posframe-mode))
 #+END_SRC
 
 *** Backup settings
@@ -298,6 +314,17 @@ Add Vim keybinds.
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+END_SRC
 
+* Nice tweaks
+** Start window in full screen
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+#+END_SRC
+** Replace 'yes or no' with 'y or n'
+#+BEGIN_SRC emacs-lisp
+  (setq use-short-answers t)
+#+END_SRC
+
+** Get rid of confirmation if file or buffer does not exist
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-nonexistent-file-or-buffer nil)
 #+END_SRC

@@ -11,19 +11,37 @@
 
 ** Langtool
 #+BEGIN_SRC emacs-lisp
-  (when
-      (file-exists-p "~/.emacs-additional.d/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
-    (progn
-      (setq langtool-language-tool-server-jar "~/.emacs-additional.d/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
-      (setq langtool-default-language "nl")
-      (use-package langtool 
-	:ensure t)))
+  ;; (when
+  ;;     (file-exists-p "~/.emacs-additional.d/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
+  ;;   (progn
+  ;;     (setq langtool-language-tool-server-jar "~/.emacs-additional.d/Taal & Grammatica/LibreGrammar-5.1/languagetool-server.jar")
+  ;;     (setq langtool-default-language "nl")
+  ;;     (use-package langtool 
+  ;; 	:ensure t)))
+  (use-package langtool
+    :ensure t)
+
+  (setq langtool-http-server-host "localhost"
+        langtool-http-server-port 8082)
+#+END_SRC
+
+** PlantUML
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package jinx
+  (use-package plantuml-mode
+    :ensure t)
+  (setq plantuml-jar-path "~/.emacs-additional.d/PlantUML/plantuml.jar")
+  (setq org-plantuml-jar-path "~/.emacs-additional.d/PlantUML/plantuml.jar")
+  (setq plantuml-default-exec-mode 'jar)
+
+  ;;   :hook (emacs-startup . global-jinx-mode)
+  ;;   :bind (("M-$" . jinx-correct)
+  ;;          ("C-M-$" . jinx-languages)))
 #+END_SRC
 
 ** Minor Tweaks
 #+BEGIN_SRC emacs-lisp
     (setq org-startup-with-inline-images t)
-    (setq org-startup-indented t)
 #+END_SRC
 
 

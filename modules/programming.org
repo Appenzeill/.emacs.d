@@ -1,40 +1,4 @@
 * Programming
-** Languages
-*** Rust
-Simple bash commands to install needed dependicies.
-#+BEGIN_SRC bash
-  rustup component add rust-src 
-  rustup +nightly component add rust-analyzer-preview
-#+END_SRC
-
-Simple minimal setup for Rust mode.
-#+BEGIN_SRC emacs-lisp
-  (use-package rust-mode
-    :ensure t)
-#+END_SRC
-
-*** Yaml
-#+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode
-    :ensure t)
-#+END_SRC
-
-*** Python
-#+BEGIN_SRC emacs-lisp
-  (use-package elpy
-    :ensure t
-    :init
-    (elpy-enable))
-#+END_SRC
-
-*** C++
-#+BEGIN_SRC emacs-lisp
-  (defun my-c++-mode-hook ()
-  (setq c-basic-offset 4)
-  (c-set-offset 'substatement-open 0))
-  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
-#+END_SRC
-
 ** Assisting Modes & packages
 *** Company Mode
 #+begin_src emacs-lisp
@@ -78,6 +42,42 @@ Simple minimal setup for Rust mode.
     :ensure t)
 #+END_SRC
 
+** Languages
+*** Rust
+Simple bash commands to install needed dependicies.
+#+BEGIN_SRC bash
+  rustup component add rust-src 
+  rustup +nightly component add rust-analyzer-preview
+#+END_SRC
+
+Simple minimal setup for Rust mode.
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :ensure t)
+#+END_SRC
+
+*** Yaml
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+*** Python
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy
+    :ensure t
+    :init
+    (elpy-enable))
+#+END_SRC
+
+*** C++
+#+BEGIN_SRC emacs-lisp
+  (defun my-c++-mode-hook ()
+  (setq c-basic-offset 4)
+  (c-set-offset 'substatement-open 0))
+  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+#+END_SRC
+
 ** Version Control
 *** Magit
 #+BEGIN_SRC emacs-lisp
@@ -92,8 +92,8 @@ Custom code to allow Emacs to enter Toolboxes using Emacs.
   (push
    (cons
     "toolbox"
- ;;   '((tramp-login-program "flatpak-spawn --host toolbox")
-    '((tramp-login-program "toolbox")
+    '((tramp-login-program "flatpak-spawn --host toolbox")
+    ;; '((tramp-login-program "toolbox")
       (tramp-login-args (("enter" "-c") ("%h")))
       (tramp-remote-shell "/bin/sh")
       (tramp-remote-shell-args ("-i") ("-c"))))
