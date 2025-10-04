@@ -2,22 +2,38 @@
 ** Main Package
 #+BEGIN_SRC emacs-lisp
   (use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-
-  (org-roam-directory "~/Notities/roam/")
-  (org-roam-completion-everywhere t)
-  :bind (("C-c r l" . org-roam-buffer-toggle)
+    :ensure t
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+    (org-roam-directory "~/Notities/roam/")
+    (org-roam-completion-everywhere t)
+    (org-roam-capture-templates
+     '(("n" "new" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("b" "book" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ))
+    :bind (("C-c r l" . org-roam-buffer-toggle)
   	 ("C-c r f" . org-roam-node-find)
   	 ("C-c r i" . org-roam-node-insert)
   	 ("C-c r c" . org-roam-capture)
   	 :map org-mode-map
   	 ("C-M-i"    . completion-at-point))
-  :config
-  (org-roam-setup))
+    :config
+    (org-roam-setup))
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  
+
+#+END_SRC
+#+RESULTS:
+: completion-at-point
 
 ** Sqlite
 #+BEGIN_SRC emacs-lisp

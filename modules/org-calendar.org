@@ -1,0 +1,10 @@
+* Agenda
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (list "~/Notities/calendar.org"))
+
+  (setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/Notities/calendar.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("c" "Contacts" entry (file+datetree "~/Notities/calendar.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
+#+END_SRC

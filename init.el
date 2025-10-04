@@ -51,14 +51,7 @@
  '(custom-safe-themes
    '("691d671429fa6c6d73098fc6ff05d4a14a323ea0a18787daeb93fde0e48ab18b"
      default))
- '(package-selected-packages
-   '(@ all-the-icons-dired all-the-icons-ibuffer auto-dark
-       centered-window dap-mode dashboard doom-modeline doom-themes
-       elpy eshell-vterm evil-collection evil-tutor flycheck lsp-ui
-       magit marginalia no-littering org-modern org-roam org-superstar
-       perspective projectile restart-emacs rust-mode smartparens
-       spacious-padding sqlite3 svg-lib undo-tree vertico-posframe
-       vterm vterm-toggle yaml-mode)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
