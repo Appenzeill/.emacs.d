@@ -92,8 +92,8 @@ Custom code to allow Emacs to enter Toolboxes using Emacs.
   (push
    (cons
     "toolbox"
-    ;; '((tramp-login-program "flatpak-spawn --host toolbox")
-    '((tramp-login-program "toolbox")
+    '((tramp-login-program "flatpak-spawn --host toolbox")
+      ;; '((tramp-login-program "toolbox")
       (tramp-login-args (("enter" "-c") ("%h")))
       (tramp-remote-shell "/bin/sh")
       (tramp-remote-shell-args ("-i") ("-c"))))

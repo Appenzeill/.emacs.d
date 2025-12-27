@@ -1,15 +1,6 @@
 * General Emacs Config
 General config, this serves as a base to build upon using the modules in the module folder.
 ** User Interface, Theming & Aesthetics
-#+BEGIN_SRC emacs-lisp
-  ;; (defun flatpak-spawn-shell-command (original-function command &optional output-buffer error-buffer)
-  ;;   "Prepend the original shell-command with 'flatpak-spawn --host' so it can bypass the flatpak sandbox."
-  ;;   (let ((prepended-command (concat "flatpak-spawn --host " command)))
-  ;;     (funcall original-function prepended-command output-buffer error-buffer)))
-
-  ;; (advice-add 'shell-command :around #'flatpak-spawn-shell-command)
-#+End_SRC
-
 *** Dashboard
 Add a fancy dashboard to the startup screen.
 #+BEGIN_SRC emacs-lisp
@@ -70,7 +61,7 @@ Add a fancy dashboard to the startup screen.
                      :notify (lambda (&rest ignore)
   			     (persp-new "Development")
   			     (persp-switch "Development")
-  			     (find-file "~/Notities/roam/20250411153947-index_development.org")
+  			     (find-file "~/Sync/Notities/roam/20250411153947-index_development.org")
   			     )
   		   (concat " " (all-the-icons-octicon "keyboard") " Development "))
       
@@ -88,7 +79,7 @@ Add a fancy dashboard to the startup screen.
                      :notify (lambda (&rest ignore)
   			     (persp-new "Roam")
   			     (persp-switch "Roam")
-  			     (find-file "~/Notities/roam/20250411154025-index_roam.org")
+  			     (find-file "~/Sync/Notities/roam/20250411154025-index_roam.org")
   			     (org-roam-node-find)
   			     )
   		   (concat " " (all-the-icons-octicon "bookmark") " Roam "))
@@ -193,7 +184,7 @@ Use doom-modeline as modeline.
     :init (auto-dark-mode))
 #+END_SRC
 
-*** Hide Scrollbar, Menubar, Titlebar & Toolbar
+*** Hide Scrollbar, Menubar, Titlebar, Toolbar & Fullscreen
 Hide UI elements to create a cleaner UI.
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
@@ -204,7 +195,9 @@ Hide UI elements to create a cleaner UI.
   (setq default-frame-alist '((undecorated . t)))
 
   (add-to-list 'default-frame-alist
-	       '(vertical-scroll-bars . nil))
+  	       '(vertical-scroll-bars . nil))
+
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
 *** All The Icons
@@ -223,7 +216,7 @@ Improve visuals by adding icons.
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+END_SRC
 
-*** Org Modern & padding 
+*** org-mode tweaks 
 use the org-modern package to improve the visual look of org-mode.
 #+BEGIN_SRC emacs-lisp
   (use-package org-modern
@@ -232,29 +225,18 @@ use the org-modern package to improve the visual look of org-mode.
   (global-visual-line-mode)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (use-package org-superstar
+    :ensure t)
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+END_SRC
+
 *** Padding
 Add some padding to all frames.
 #+BEGIN_SRC emacs-lisp
   (use-package spacious-padding
 	    :ensure t)
   (spacious-padding-mode t)
-#+END_SRC
-
-** Evil (Vi emulation)
-Add Vim keybinds.
-#+BEGIN_SRC emacs-lisp
-  (setq evil-want-keybinding nil)
-  (use-package evil
-	  :ensure t)
-  (evil-mode 1)
-
-  (use-package evil-tutor 
-       :ensure t)
-
-  (use-package evil-collection 
-       :ensure t)
-
-  (evil-collection-init)
 #+END_SRC
 
 ** Minor useful packages, Custom bindings & Tweaks
@@ -279,13 +261,12 @@ Add Vim keybinds.
 #+END_SRC
 
 *** No littering
-**** Package
 #+BEGIN_SRC emacs-lisp
   (use-package no-littering
      :ensure t)
 #+END_SRC
 
-**** Custom bindings
+*** Custom bindings
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c c") 'comment-or-uncomment-region)
   (global-set-key (kbd "C-c e") 'org-edit-src-code)
@@ -303,7 +284,33 @@ Add Vim keybinds.
     :ensure t)
 #+END_SRC
 
-** Perspective
+*** Replace 'yes or no' with 'y or n'
+#+BEGIN_SRC emacs-lisp
+  (setq use-short-answers t)
+#+END_SRC
+
+*** Get rid of confirmation if file or buffer does not exist
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-nonexistent-file-or-buffer nil)
+#+END_SRC
+** Workflow
+Add Vim keybinds.
+#+BEGIN_SRC emacs-lisp
+  (setq evil-want-keybinding nil)
+  (use-package evil
+	  :ensure t)
+  (evil-mode 1)
+
+  (use-package evil-tutor 
+       :ensure t)
+
+  (use-package evil-collection 
+       :ensure t)
+
+  (evil-collection-init)
+#+END_SRC
+
+Add the perspective package responsible for creating 'workspaces'.
 #+BEGIN_SRC emacs-lisp
   (use-package perspective
     :ensure t  ; use `:straight t` if using straight.el!
@@ -317,24 +324,25 @@ Add Vim keybinds.
   (persp-rename "Dashboard")
 #+END_SRC
 
-** Superstar
+Add a extra tramp layer for Distrobox.
 #+BEGIN_SRC emacs-lisp
-  (use-package org-superstar
-    :ensure t)
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+  (defun user/tramp-layer ()
+      "Enable TRAMP to use distrobox to transparently enter containers."
+      (use-package tramp
+          :commands (eshell shell term ansi-term)
+          :custom
+          (tramp-histfile-override "/dev/null")
+          :config
+          (add-to-list 'tramp-remote-path 'tramp-own-remote-path) ; make sure TRAMP/any shell you use checks the path variable of the container as well as its own
+          (message "Loading tramp...")
+          ;; TRAMP 2.7.1 will have distrobox built in, so this won't be necessary for much longer!
+          (add-to-list 'tramp-methods
+                       `("distrobox" . ((tramp-login-program "distrobox-enter")
+                                        (tramp-login-args
+                                         (("%h")
+                                          ("-e" "%l")))
+                                        (tramp-remote-shell "/bin/sh")
+                                        (tramp-remote-shell-login ("-l"))
+                                        (tramp-remote-shell-args ("-i" "-c")))))))
 #+END_SRC
 
-* Nice tweaks
-** Start window in full screen
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-#+END_SRC
-** Replace 'yes or no' with 'y or n'
-#+BEGIN_SRC emacs-lisp
-  (setq use-short-answers t)
-#+END_SRC
-
-** Get rid of confirmation if file or buffer does not exist
-#+BEGIN_SRC emacs-lisp
-  (setq confirm-nonexistent-file-or-buffer nil)
-#+END_SRC
