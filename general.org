@@ -98,14 +98,6 @@ Add a fancy dashboard to the startup screen.
     (dashboard-setup-startup-hook))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  ;; (persp-new "Eshell")
-  ;; (persp-new "Agenda")
-  ;; (persp-new "Development")
-  ;;  (persp-switch "Eshell")
-  ;;  (eshell)
-#+END_SRC
-
 *** Vertico
 Minimal completion UI.
 #+BEGIN_SRC emacs-lisp
@@ -293,6 +285,26 @@ Add some padding to all frames.
 #+BEGIN_SRC emacs-lisp
   (setq confirm-nonexistent-file-or-buffer nil)
 #+END_SRC
+*** Tramp modifications
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'tramp
+  ;; Find and modify the existing distrobox method
+  (let ((method (assoc "distrobox" tramp-methods)))
+    (if method
+        ;; Modify the existing method
+        (setcdr method
+                '((tramp-login-program "flatpak-spawn --host distrobox-enter")
+                  (tramp-login-args (("enter") ("-n") ("%h")))
+                  (tramp-remote-shell "/bin/sh")
+                  (tramp-remote-shell-args ("-c"))))
+      ;; Or add a new method if it doesn't exist
+      (add-to-list 'tramp-methods
+                   '("distrobox"
+                     (tramp-login-program "flatpak-spawn --host distrobox-enter")
+                     (tramp-login-args (("enter") ("-n") ("%h")))
+                     (tramp-remote-shell "/bin/sh")
+                     (tramp-remote-shell-args ("-c")))))))
+#+END_SRC
 ** Workflow
 Add Vim keybinds.
 #+BEGIN_SRC emacs-lisp
@@ -322,27 +334,5 @@ Add the perspective package responsible for creating 'workspaces'.
 
   ; rename standard perspective from "main" to "Dashboard"
   (persp-rename "Dashboard")
-#+END_SRC
-
-Add a extra tramp layer for Distrobox.
-#+BEGIN_SRC emacs-lisp
-  (defun user/tramp-layer ()
-      "Enable TRAMP to use distrobox to transparently enter containers."
-      (use-package tramp
-          :commands (eshell shell term ansi-term)
-          :custom
-          (tramp-histfile-override "/dev/null")
-          :config
-          (add-to-list 'tramp-remote-path 'tramp-own-remote-path) ; make sure TRAMP/any shell you use checks the path variable of the container as well as its own
-          (message "Loading tramp...")
-          ;; TRAMP 2.7.1 will have distrobox built in, so this won't be necessary for much longer!
-          (add-to-list 'tramp-methods
-                       `("distrobox" . ((tramp-login-program "distrobox-enter")
-                                        (tramp-login-args
-                                         (("%h")
-                                          ("-e" "%l")))
-                                        (tramp-remote-shell "/bin/sh")
-                                        (tramp-remote-shell-login ("-l"))
-                                        (tramp-remote-shell-args ("-i" "-c")))))))
 #+END_SRC
 
