@@ -76,7 +76,7 @@ Simple minimal setup for Rust mode.
   (setq c-basic-offset 4)
   (c-set-offset 'substatement-open 0))
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
-#+END_SRC
++END_SRC
 
 ** Version Control
 *** Magit
@@ -98,4 +98,8 @@ Custom code to allow Emacs to enter Toolboxes using Emacs.
       (tramp-remote-shell "/bin/sh")
       (tramp-remote-shell-args ("-i") ("-c"))))
    tramp-methods)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 #+END_SRC
