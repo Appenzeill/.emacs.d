@@ -89,7 +89,7 @@ Add a fancy dashboard to the startup screen.
                        :notify (lambda (&rest ignore)
     			     (persp-new "LaTeX")
     			     (persp-switch "LaTeX")
-    			     (find-file "/toolbox:LaTeX:~/Documenten/")
+    			     (find-file "/distrobox:LaTeX:~/Documenten/")
     			     )
     		   (concat " " (all-the-icons-octicon "book") " LaTeX "))
 
