@@ -11,10 +11,14 @@
 [[elisp:(dashboard-roam-perspective)][Roam]]
 [[elisp:(dashboard-development-perspective)][Development]]
 [[elisp:(dashboard-latex-perspective)][LaTeX]]
+[[elisp:(dashboard-eshell-perspective)][Eshell]]
 
-* Config
+* Configuratie
 [[elisp:(find-file "general.org")][general.org]]
 [[elisp:(find-file "init.el")][init.el]]
 
-* Useful functions
+* Functies
 [[elisp:(package-refresh-contents)][package-refresh-contents]]
+[[elisp:(clone-frame)][clone-frame]]
+
+* Bestanden

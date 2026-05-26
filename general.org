@@ -24,6 +24,13 @@ Extra functions defined to link to perspectives inside the org file.
     (persp-new "LaTeX")
     (persp-switch "LaTeX")
     (find-file "/distrobox:LaTeX:~/Documenten/"))
+
+  (defun dashboard-eshell-perspective ()
+    "Simple function to create and go to the Development perspective."
+    (persp-new "Eshell")
+    (persp-switch "Eshell")
+    (eshell))
+
 #+END_SRC
 
 *** Vertico
@@ -64,7 +71,14 @@ Center the vertico frame in the middle of Emacs.
     :ensure t
     :init
     (vertico-posframe-mode))
+
+  (setq vertico-posframe-parameters
+      '((left-fringe . 24)
+        (right-fringe . 24)))
 #+END_SRC
+
+#+RESULTS:
+: ((left-fringe . 24) (right-fringe . 24))
 
 *** Theme
 **** Doom Themes & Modeline
@@ -270,4 +284,32 @@ Add the perspective package responsible for creating 'workspaces'.
 
   ;; rename standard perspective from "main" to "Dashboard"
   (persp-rename "Dashboard")
+#+END_SRC
+
+* Sync Perspectives 
+#+BEGIN_SRC emacs-lisp
+  (require 'perspective)
+
+  (defvar perspective-current-frame (selected-frame)
+    "Current frame storing current state of perspectives.")
+
+  (defvar perspective-shared-state nil
+    "Shared global state of the perspectives.")
+
+  (defun sync-perspectives-on-frame-switch ()
+    "Responsible for syncing the perspectives between frames."
+    (setq perspective-shared-state (frame-parameter perspective-current-frame 'persp--hash))
+    (set-frame-parameter nil 'persp--hash (copy-hash-table perspective-shared-state))
+    (setq perspective-current-frame (selected-frame)))
+
+  (defun sync-perspectives-new-frame ()
+    "Makes sure whenever a new frame is created it defaults to the Dashboard perspective."
+    (persp-rename "Dashboard"))
+
+  (add-hook 'focus-in-hook #'sync-perspectives-on-frame-switch)
+  ;; (add-hook 'window-selection-change-functions #'sync-perspectives-new-frame)
+
+  (add-hook 'window-selection-change-functions
+    (lambda (frame)
+      (sync-perspectives-new-frame)))
 #+END_SRC
