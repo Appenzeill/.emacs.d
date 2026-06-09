@@ -1,5 +1,6 @@
 #+STARTUP: showall
-* Daan's Personal Emacs Config 
+* Daan's Personal Emacs Config
+Project has been archived and moved to https://codeberg.org/Appenzeill/.emacs.d.
 [[./showcase.png]]
 ** Setup
 My own personal emacs configuration, it has 2 parts.
